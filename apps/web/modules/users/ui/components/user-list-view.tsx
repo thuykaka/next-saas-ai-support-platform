@@ -2,12 +2,15 @@
 
 import { toast } from 'sonner';
 import { useQuery, useMutation } from 'convex/react';
+import { Authenticated, Unauthenticated } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
 import { Button } from '@workspace/ui/components/button';
+import { SignInButton, UserButton } from '@clerk/nextjs';
 
-export const UserListView = () => {
+export const UserListViewContent = () => {
   const users = useQuery(api.users.getMany);
   const createUser = useMutation(api.users.create);
+  const currentUser = useQuery(api.auth.getCurrentUser);
 
   const handleCreateUser = async () => {
     const { id } = await createUser({
@@ -20,10 +23,27 @@ export const UserListView = () => {
   };
 
   return (
-    <div>
+    <div className='flex min-h-screen flex-col items-center justify-center gap-4'>
       <h1>Apps/Web</h1>
+      <Button onClick={handleCreateUser} className='mb-2'>
+        Create User
+      </Button>
+      <pre>{JSON.stringify(currentUser, null, 2)}</pre>
       <pre>{JSON.stringify(users, null, 2)}</pre>
-      <Button onClick={handleCreateUser}>Create User</Button>
     </div>
+  );
+};
+
+export const UserListView = () => {
+  return (
+    <>
+      <Authenticated>
+        <UserButton />
+        <UserListViewContent />
+      </Authenticated>
+      <Unauthenticated>
+        <SignInButton />
+      </Unauthenticated>
+    </>
   );
 };

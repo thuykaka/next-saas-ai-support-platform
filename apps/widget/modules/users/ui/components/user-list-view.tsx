@@ -15,15 +15,16 @@ export const UserListView = () => {
       email: 'john.doe@example.com',
       password: 'password'
     });
-
     toast.success(`User created with id: ${id}`);
   };
 
   return (
     <div>
       <h1>Apps/Widget</h1>
+      <Button onClick={handleCreateUser} className='mb-2'>
+        Create User
+      </Button>
       <pre>{JSON.stringify(users, null, 2)}</pre>
-      <Button onClick={handleCreateUser}>Create User</Button>
     </div>
   );
 };
