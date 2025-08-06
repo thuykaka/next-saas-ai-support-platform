@@ -29,6 +29,8 @@
     "^js-cookie$",
     "^react-hook-form$",
     "^use-intl$",
+    "sonner",
+    "convex",
     "^@workspace/(.*)$",
     "^@radix-ui/(.*)$",
     "^@hookform/resolvers/zod$",

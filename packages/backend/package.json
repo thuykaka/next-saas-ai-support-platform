@@ -1,0 +1,23 @@
+{
+    "name": "@workspace/backend",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "dev": "convex dev",
+        "setup": "convex dev --until-success"
+    },
+    "exports": {
+        "./convex/*": "./convex/*",
+        "./convex/_generated/*": "./convex/_generated/*"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "convex": "latest",
+        "openai": "latest"
+    },
+    "devDependencies": {
+        "@workspace/typescript-config": "workspace:*",
+        "typescript": "latest"
+    }
+}
