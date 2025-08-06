@@ -4,7 +4,7 @@ import { query, mutation } from './_generated/server';
 export const getMany = query({
   args: {},
   handler: async (ctx) => {
-    const users = await ctx.db.query('users').collect();
+    const users = await ctx.db.query('users').order('desc').collect();
     return users;
   }
 });
@@ -16,6 +16,12 @@ export const create = mutation({
     password: v.string()
   },
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (identity === null) {
+      throw new Error('Unauthenticated');
+    }
+
     const id = await ctx.db.insert('users', args);
     return { id };
   }
