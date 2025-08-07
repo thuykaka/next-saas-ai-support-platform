@@ -22,6 +22,10 @@ export const create = mutation({
       throw new Error('Unauthenticated');
     }
 
+    if (!identity.orgId) {
+      throw new Error('No organization');
+    }
+
     const id = await ctx.db.insert('users', args);
     return { id };
   }
