@@ -26,6 +26,8 @@ export const create = mutation({
       throw new Error('No organization');
     }
 
+    throw new Error('Not implemented');
+
     const id = await ctx.db.insert('users', args);
     return { id };
   }

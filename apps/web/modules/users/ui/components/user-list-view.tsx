@@ -2,13 +2,11 @@
 
 import { toast } from 'sonner';
 import { useQuery, useMutation } from 'convex/react';
-import { Authenticated, Unauthenticated } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
 import { Button } from '@workspace/ui/components/button';
-import { OrganizationSwitcher, SignInButton, UserButton } from '@clerk/nextjs';
+import { OrganizationSwitcher, UserButton } from '@clerk/nextjs';
 
 export const UserListViewContent = () => {
-  const users = useQuery(api.users.getMany);
   const createUser = useMutation(api.users.create);
   const currentUser = useQuery(api.auth.getCurrentUser);
 
@@ -29,7 +27,6 @@ export const UserListViewContent = () => {
         Create User
       </Button>
       <pre>{JSON.stringify(currentUser, null, 2)}</pre>
-      <pre>{JSON.stringify(users, null, 2)}</pre>
     </div>
   );
 };
