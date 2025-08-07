@@ -5,7 +5,7 @@ import { useQuery, useMutation } from 'convex/react';
 import { Authenticated, Unauthenticated } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
 import { Button } from '@workspace/ui/components/button';
-import { SignInButton, UserButton } from '@clerk/nextjs';
+import { OrganizationSwitcher, SignInButton, UserButton } from '@clerk/nextjs';
 
 export const UserListViewContent = () => {
   const users = useQuery(api.users.getMany);
@@ -37,13 +37,9 @@ export const UserListViewContent = () => {
 export const UserListView = () => {
   return (
     <>
-      <Authenticated>
-        <UserButton />
-        <UserListViewContent />
-      </Authenticated>
-      <Unauthenticated>
-        <SignInButton />
-      </Unauthenticated>
+      <UserButton />
+      <OrganizationSwitcher hidePersonal={true} />
+      <UserListViewContent />
     </>
   );
 };
