@@ -93,6 +93,9 @@ importers:
 
   apps/widget:
     dependencies:
+      '@hookform/resolvers':
+        specifier: 5.2.1
+        version: 5.2.1(react-hook-form@7.62.0(react@19.1.1))
       '@vapi-ai/web':
         specifier: ^2.3.8
         version: 2.3.8
@@ -120,9 +123,15 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.1.1(react@19.1.1)
+      react-hook-form:
+        specifier: 7.62.0
+        version: 7.62.0(react@19.1.1)
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      zod:
+        specifier: ^4.0.5
+        version: 4.0.5
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -150,7 +159,7 @@ importers:
         version: 1.25.4(@clerk/clerk-react@5.38.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
       openai:
         specifier: latest
-        version: 5.12.0(zod@3.25.76)
+        version: 5.12.1(zod@3.25.76)
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -353,8 +362,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.1.7(@types/react@19.1.9))(@types/react@19.1.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       zod:
-        specifier: ^3.24.2
-        version: 3.25.76
+        specifier: 4.0.5
+        version: 4.0.5
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.0.8
@@ -3859,8 +3868,8 @@ packages:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
 
-  openai@5.12.0:
-    resolution: {integrity: sha512-vUdt02xiWgOHiYUmW0Hj1Qu9OKAiVQu5Bd547ktVCiMKC1BkB5L3ImeEnCyq3WpRKR6ZTaPgekzqdozwdPs7Lg==}
+  openai@5.12.1:
+    resolution: {integrity: sha512-26s536j4Fi7P3iUma1S9H33WRrw0Qu8pJ2nYJHffrlKHPU0JK4d0r3NcMgqEcAeTdNLGYNyoFsqN4g4YE9vutg==}
     hasBin: true
     peerDependencies:
       ws: ^8.18.0
@@ -4837,6 +4846,9 @@ packages:
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.0.5:
+    resolution: {integrity: sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==}
 
 snapshots:
 
@@ -8592,7 +8604,7 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  openai@5.12.0(zod@3.25.76):
+  openai@5.12.1(zod@3.25.76):
     optionalDependencies:
       zod: 3.25.76
 
@@ -9675,4 +9687,7 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod@3.25.76: {}
+  zod@3.25.76:
+    optional: true
+
+  zod@4.0.5: {}
