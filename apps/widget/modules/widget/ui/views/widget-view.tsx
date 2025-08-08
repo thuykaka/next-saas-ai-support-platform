@@ -1,8 +1,10 @@
 'use client';
 
 import { useScreen } from '@/modules/widget/store/use-screen-store';
+import { WIDGET_SCREENS } from '@/modules/widget/types';
 import { WidgetAuthScreen } from '@/modules/widget/ui/screens/widget-auth-screen';
-import { WIDGET_SCREENS } from '../../types';
+import { WidgetErrorScreen } from '@/modules/widget/ui/screens/widget-error-screen';
+import { WidgetLoadingScreen } from '@/modules/widget/ui/screens/widget-loading-screen';
 
 interface WidgetViewProps {
   orgId: string;
@@ -12,8 +14,8 @@ export const WidgetView = ({ orgId }: WidgetViewProps) => {
   const screen = useScreen();
 
   const screenComponents = {
-    [WIDGET_SCREENS.ERROR]: <div>Error</div>,
-    [WIDGET_SCREENS.LOADING]: <div>Loading</div>,
+    [WIDGET_SCREENS.ERROR]: <WidgetErrorScreen />,
+    [WIDGET_SCREENS.LOADING]: <WidgetLoadingScreen orgId={orgId} />,
     [WIDGET_SCREENS.SELECTION]: <div>Selection</div>,
     [WIDGET_SCREENS.VOICE]: <div>Voice</div>,
     [WIDGET_SCREENS.AUTH]: <WidgetAuthScreen />,
