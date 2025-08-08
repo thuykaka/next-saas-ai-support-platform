@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@workspace/ui/components/button';
-import { useVapi } from '../hooks/use-vapi';
+import { useVapi } from '../../hooks/use-vapi';
 
 export const WidgetView = () => {
   const {
