@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useAction, useMutation } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
-import { Id } from '@workspace/backend/_generated/dataModel';
 import { Loader2Icon } from 'lucide-react';
-import {
-  useContactSessionActions,
-  useContactSessionId
-} from '@/modules/widget/store/use-contact-session-store';
+import { useContactSessionId } from '@/modules/widget/store/use-contact-session-store';
 import {
   useScreenActions,
   useScreenLoadingMessage
@@ -81,7 +77,7 @@ export const WidgetLoadingScreen = ({ orgId }: WidgetLoadingScreenProps) => {
 
     setLoadingMessage('Validating session...');
 
-    validateContactSession({ id: contactSessionId as Id<'contactSessions'> })
+    validateContactSession({ id: contactSessionId })
       .then(({ valid }) => {
         console.log('contact session valid', valid);
         // if is valid, done

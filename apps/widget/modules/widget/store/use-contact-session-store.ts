@@ -1,10 +1,11 @@
+import { Id } from '@workspace/backend/_generated/dataModel';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 type ContactSessionStore = {
-  id: string | null;
+  id: Id<'contactSessions'> | null;
   actions: {
-    setId: (id: string) => void;
+    setContactSessionId: (id: Id<'contactSessions'>) => void;
   };
 };
 
@@ -13,7 +14,7 @@ const useContactSessionStore = create<ContactSessionStore>()(
     (set) => ({
       id: null,
       actions: {
-        setId: (id: string) => set({ id })
+        setContactSessionId: (id: Id<'contactSessions'>) => set({ id })
       }
     }),
     {

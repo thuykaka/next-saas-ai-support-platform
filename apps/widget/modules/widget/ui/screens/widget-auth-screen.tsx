@@ -30,7 +30,7 @@ const formSchema = z.object({
 
 export const WidgetAuthScreen = () => {
   const orgId = useScreenOrgId();
-  const { setId: setContactSessionId } = useContactSessionActions();
+  const { setContactSessionId } = useContactSessionActions();
 
   const createContactSession = useMutation(api.public.contactSessions.create);
   const [isPendingCreateContactSession, setIsPendingCreateContactSession] =
