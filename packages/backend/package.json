@@ -13,6 +13,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@clerk/backend": "^2.6.3",
         "convex": "latest",
         "openai": "latest"
     },

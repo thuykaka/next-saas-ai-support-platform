@@ -18,17 +18,23 @@ import {
 } from '@workspace/ui/components/form';
 import { Input } from '@workspace/ui/components/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { WidgetHeader } from '../components/widget-header';
+import { Loader2Icon } from 'lucide-react';
+import { useContactSessionActions } from '@/modules/widget/store/use-contact-session-store';
+import { useScreenOrgId } from '@/modules/widget/store/use-screen-store';
+import { WidgetHeader } from '@/modules/widget/ui/components/widget-header';
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.email('Invalid email address')
 });
 
-const orgId = 'org_123';
-
 export const WidgetAuthScreen = () => {
-  const createContactSession = useMutation(api.public.contact_session.create);
+  const orgId = useScreenOrgId();
+  const { setId: setContactSessionId } = useContactSessionActions();
+
+  const createContactSession = useMutation(api.public.contactSessions.create);
+  const [isPendingCreateContactSession, setIsPendingCreateContactSession] =
+    useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,36 +50,44 @@ export const WidgetAuthScreen = () => {
       return;
     }
 
-    const metadata: Doc<'contactSessions'>['metadata'] = {
-      userAgent: navigator.userAgent,
-      language: navigator.language,
-      languages: navigator.languages as string[],
-      platform: navigator.platform,
-      vendor: navigator.vendor,
-      screenResolution: {
-        width: window.screen.width,
-        height: window.screen.height
-      },
-      viewportSize: {
-        width: window.innerWidth,
-        height: window.innerHeight
-      },
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      timezoneOffset: new Date().getTimezoneOffset(),
-      cookieEnabled: navigator.cookieEnabled,
-      referrer: document.referrer || '',
-      currentUrl: window.location.href
-    };
+    setIsPendingCreateContactSession(true);
 
-    const result = await createContactSession({
-      ...values,
-      orgId,
-      metadata
-    });
+    try {
+      const metadata: Doc<'contactSessions'>['metadata'] = {
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        languages: navigator.languages as string[],
+        platform: navigator.platform,
+        vendor: navigator.vendor,
+        screenResolution: {
+          width: window.screen.width,
+          height: window.screen.height
+        },
+        viewportSize: {
+          width: window.innerWidth,
+          height: window.innerHeight
+        },
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        timezoneOffset: new Date().getTimezoneOffset(),
+        cookieEnabled: navigator.cookieEnabled,
+        referrer: document.referrer || '',
+        currentUrl: window.location.href
+      };
 
-    console.log(result);
+      const result = await createContactSession({
+        ...values,
+        orgId,
+        metadata
+      });
 
-    toast.success(`Contact session created: ${result.id}`);
+      toast.success(`Contact session created: ${result.id}`);
+      setContactSessionId(result.id);
+    } catch (error) {
+      toast.error('Failed to create contact session');
+      console.error('Error creating contact session:', error);
+    } finally {
+      setIsPendingCreateContactSession(false);
+    }
   };
 
   return (
@@ -125,8 +139,19 @@ export const WidgetAuthScreen = () => {
               </FormItem>
             )}
           />
-          <Button type='submit' className='w-full'>
-            Continue
+          <Button
+            type='submit'
+            className='w-full'
+            disabled={isPendingCreateContactSession}
+          >
+            {isPendingCreateContactSession ? (
+              <>
+                <Loader2Icon className='mr-2 h-4 w-4 animate-spin' />
+                Creating...
+              </>
+            ) : (
+              'Continue'
+            )}
           </Button>
         </form>
       </Form>
