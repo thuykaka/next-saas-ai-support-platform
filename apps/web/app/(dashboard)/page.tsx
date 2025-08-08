@@ -5,7 +5,7 @@ export default function Page() {
     <div className='flex min-h-svh items-center justify-center'>
       <div className='flex flex-col items-center justify-center gap-4'>
         <h1 className='text-2xl font-bold'>Apps/Web</h1>
-        <UserListView />
+        {/* <UserListView /> */}
       </div>
     </div>
   );

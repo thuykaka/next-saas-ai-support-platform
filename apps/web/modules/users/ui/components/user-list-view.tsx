@@ -34,8 +34,8 @@ export const UserListViewContent = () => {
 export const UserListView = () => {
   return (
     <>
-      <UserButton />
-      <OrganizationSwitcher hidePersonal={true} />
+      {/* <UserButton /> */}
+      {/* <OrganizationSwitcher hidePersonal={true} /> */}
       <UserListViewContent />
     </>
   );
