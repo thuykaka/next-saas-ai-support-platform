@@ -114,7 +114,21 @@ export const WidgetInboxScreen = () => {
 };
 
 const ConversationSkeleton = () => {
-  return Array.from({ length: 5 }).map((_, index) => (
-    <Skeleton key={index} className='shadow-xs h-20 w-full border px-4 py-2' />
+  return Array.from({ length: 10 }).map((_, index) => (
+    <div
+      key={index}
+      className='shadow-xs h-20 w-full rounded-md border px-4 py-2'
+    >
+      <div className='flex w-full flex-col gap-4 overflow-hidden text-start'>
+        <div className='flex w-full items-center justify-between gap-x-2'>
+          <Skeleton className='text-muted-foreground h-3 w-24' />
+          <Skeleton className='text-muted-foreground h-3 w-12' />
+        </div>
+        <div className='flex w-full items-center justify-between gap-x-2'>
+          <Skeleton className='h-3 w-full' />
+          <Skeleton className='size-8 shrink-0 rounded-full' />
+        </div>
+      </div>
+    </div>
   ));
 };
