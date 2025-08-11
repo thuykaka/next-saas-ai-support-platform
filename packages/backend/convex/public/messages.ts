@@ -13,12 +13,13 @@ export const create = action({
   },
   handler: async (ctx, args) => {
     const contactSession = await ctx.runQuery(
-      internal.system.contacSessions.getOne,
+      internal.system.contactSessions.getOne,
       {
         contactSessionId: args.contactSessionId
       }
     );
 
+    // Check session is valid and not expired
     if (!contactSession || contactSession.expiresAt < Date.now()) {
       throw new ConvexError({
         code: 'UNAUTHORIZED',
@@ -26,6 +27,7 @@ export const create = action({
       });
     }
 
+    // Get conversation by threadId
     const conversation = await ctx.runQuery(
       internal.system.conversations.getByThreadId,
       {
@@ -33,10 +35,19 @@ export const create = action({
       }
     );
 
+    // Check conversation is valid
     if (!conversation) {
       throw new ConvexError({
         code: 'NOT_FOUND',
         message: 'Conversation not found'
+      });
+    }
+
+    // Check conversation is from the same session
+    if (conversation.contactSessionId !== contactSession._id) {
+      throw new ConvexError({
+        code: 'UNAUTHORIZED',
+        message: 'Invalid session'
       });
     }
 

@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@ai-sdk/react": "^2.0.9",
+    "@dicebear/collection": "^9.2.3",
+    "@dicebear/core": "^9.2.3",
     "@hookform/resolvers": "^5.2.1",
     "@icons-pack/react-simple-icons": "^13.7.0",
     "@radix-ui/react-accordion": "^1.2.11",
