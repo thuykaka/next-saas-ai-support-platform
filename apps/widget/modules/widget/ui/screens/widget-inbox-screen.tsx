@@ -6,7 +6,7 @@ import { ConversationStatusIcon } from '@workspace/ui/components/conversation-st
 import { InfiniteScrollTrigger } from '@workspace/ui/components/infinite-scroll-trigger';
 import { Skeleton } from '@workspace/ui/components/skeleton';
 import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
-import { ArrowLeftIcon, Loader2Icon } from 'lucide-react';
+import { ArrowLeftIcon } from 'lucide-react';
 import { useContactSessionId } from '@/modules/widget/store/use-contact-session-store';
 import { useConversationActions } from '@/modules/widget/store/use-conversation-store';
 import { useScreenActions } from '@/modules/widget/store/use-screen-store';
@@ -22,7 +22,6 @@ export const WidgetInboxScreen = () => {
   const {
     results: conversations,
     status,
-    isLoading,
     loadMore
   } = usePaginatedQuery(
     api.public.conversations.getMany,
@@ -34,12 +33,17 @@ export const WidgetInboxScreen = () => {
     { initialNumItems: 10 }
   );
 
-  const { topEleRef, handleLoadMore, canLoadMore, isLoadingMore } =
-    useInfiniteScroll({
-      status: status,
-      onLoadMore: loadMore,
-      loadSize: 10
-    });
+  const {
+    topEleRef,
+    handleLoadMore,
+    canLoadMore,
+    isLoadingMore,
+    isLoadingFirstPage
+  } = useInfiniteScroll({
+    status: status,
+    onLoadMore: loadMore,
+    loadSize: 10
+  });
 
   const handleOnBack = () => {
     setScreen(WIDGET_SCREENS.SELECTION);
@@ -56,7 +60,7 @@ export const WidgetInboxScreen = () => {
         </div>
       </WidgetHeader>
       <div className='flex flex-1 flex-col gap-y-2 overflow-y-auto p-4'>
-        {isLoading ? (
+        {isLoadingFirstPage ? (
           <ConversationSkeleton />
         ) : conversations.length > 0 ? (
           <>
