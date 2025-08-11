@@ -15,6 +15,7 @@ import type {
 } from "convex/server";
 import type * as auth from "../auth.js";
 import type * as public_contactSessions from "../public/contactSessions.js";
+import type * as public_conversations from "../public/conversations.js";
 import type * as public_organizations from "../public/organizations.js";
 import type * as users from "../users.js";
 
@@ -29,6 +30,7 @@ import type * as users from "../users.js";
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   "public/contactSessions": typeof public_contactSessions;
+  "public/conversations": typeof public_conversations;
   "public/organizations": typeof public_organizations;
   users: typeof users;
 }>;

@@ -42,5 +42,20 @@ export default defineSchema({
     )
   })
     .index('by_org_id', ['orgId'])
-    .index('by_expires_at', ['expiresAt'])
+    .index('by_expires_at', ['expiresAt']),
+
+  conversations: defineTable({
+    threadId: v.string(),
+    orgId: v.string(),
+    contactSessionId: v.id('contactSessions'),
+    status: v.union(
+      v.literal('unresolved'),
+      v.literal('escalated'),
+      v.literal('resolved')
+    )
+  })
+    .index('by_org_id', ['orgId'])
+    .index('by_contact_session_id', ['contactSessionId'])
+    .index('by_status_and_org_id', ['status', 'orgId'])
+    .index('by_thread_id', ['threadId'])
 });
