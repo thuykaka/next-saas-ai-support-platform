@@ -13,6 +13,7 @@ import {
   useScreenActions,
   useScreenOrgId
 } from '@/modules/widget/store/use-screen-store';
+import { WidgetFooter } from '@/modules/widget/ui/components/widget-footer';
 import { WidgetHeader } from '@/modules/widget/ui/components/widget-header';
 import { WIDGET_SCREENS } from '../../types';
 
@@ -89,6 +90,7 @@ export const WidgetSelectionScreen = () => {
           )}
         </Button>
       </div>
+      <WidgetFooter />
     </>
   );
 };

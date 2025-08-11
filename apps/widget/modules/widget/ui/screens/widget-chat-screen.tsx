@@ -22,16 +22,8 @@ import {
 import { Response } from '@workspace/ui/components/ai-elements/response';
 import { Button } from '@workspace/ui/components/button';
 import { DicebearAvatar } from '@workspace/ui/components/dicebear-avatar';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@workspace/ui/components/form';
+import { Form, FormField } from '@workspace/ui/components/form';
 import { InfiniteScrollTrigger } from '@workspace/ui/components/infinite-scroll-trigger';
-import { Input } from '@workspace/ui/components/input';
 import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeftIcon, MenuIcon } from 'lucide-react';
@@ -126,12 +118,12 @@ export const WidgetChatScreen = () => {
     <>
       <WidgetHeader className='flex items-center justify-between'>
         <div className='flex items-center gap-x-2'>
-          <Button size='icon' variant='ghost' onClick={handleOnBack}>
+          <Button size='icon' variant='transparent' onClick={handleOnBack}>
             <ArrowLeftIcon className='size-4' />
           </Button>
           <p className='text-lg font-medium'>Chat</p>
         </div>
-        <Button size='icon' variant='ghost'>
+        <Button size='icon' variant='transparent'>
           <MenuIcon className='size-4' />
         </Button>
       </WidgetHeader>
