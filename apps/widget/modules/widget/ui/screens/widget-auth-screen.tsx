@@ -20,8 +20,12 @@ import { Input } from '@workspace/ui/components/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon } from 'lucide-react';
 import { useContactSessionActions } from '@/modules/widget/store/use-contact-session-store';
-import { useScreenOrgId } from '@/modules/widget/store/use-screen-store';
+import {
+  useScreenActions,
+  useScreenOrgId
+} from '@/modules/widget/store/use-screen-store';
 import { WidgetHeader } from '@/modules/widget/ui/components/widget-header';
+import { WIDGET_SCREENS } from '../../types';
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -31,6 +35,7 @@ const formSchema = z.object({
 export const WidgetAuthScreen = () => {
   const orgId = useScreenOrgId();
   const { setContactSessionId } = useContactSessionActions();
+  const { setScreen } = useScreenActions();
 
   const createContactSession = useMutation(api.public.contactSessions.create);
   const [isPendingCreateContactSession, setIsPendingCreateContactSession] =
@@ -82,6 +87,8 @@ export const WidgetAuthScreen = () => {
 
       toast.success(`Contact session created: ${result.id}`);
       setContactSessionId(result.id);
+
+      setScreen(WIDGET_SCREENS.SELECTION);
     } catch (error) {
       toast.error('Failed to create contact session');
       console.error('Error creating contact session:', error);

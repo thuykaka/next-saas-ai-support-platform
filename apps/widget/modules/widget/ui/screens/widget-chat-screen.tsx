@@ -21,6 +21,7 @@ import {
 } from '@workspace/ui/components/ai-elements/prompt-input';
 import { Response } from '@workspace/ui/components/ai-elements/response';
 import { Button } from '@workspace/ui/components/button';
+import { DicebearAvatar } from '@workspace/ui/components/dicebear-avatar';
 import {
   Form,
   FormControl,
@@ -29,7 +30,9 @@ import {
   FormLabel,
   FormMessage
 } from '@workspace/ui/components/form';
+import { InfiniteScrollTrigger } from '@workspace/ui/components/infinite-scroll-trigger';
 import { Input } from '@workspace/ui/components/input';
+import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeftIcon, MenuIcon } from 'lucide-react';
 import { useContactSessionId } from '@/modules/widget/store/use-contact-session-store';
@@ -74,6 +77,13 @@ export const WidgetChatScreen = () => {
     { initialNumItems: 10 }
   );
 
+  const { topEleRef, handleLoadMore, canLoadMore, isLoadingMore } =
+    useInfiniteScroll({
+      status: messages.status,
+      onLoadMore: messages.loadMore,
+      loadSize: 10
+    });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -85,10 +95,9 @@ export const WidgetChatScreen = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (!conversation || !contactSessionId) return;
+    if (conversation.status === 'resolved') return;
 
     setIsPendingCreateMessage(true);
-
-    form.reset();
 
     try {
       await createMessage({
@@ -96,8 +105,13 @@ export const WidgetChatScreen = () => {
         threadId: conversation.threadId,
         contactSessionId
       });
+      form.reset();
     } catch (error) {
       console.error(error);
+      form.setError('message', {
+        type: 'server',
+        message: 'Failed to send. Please try again.'
+      });
     } finally {
       setIsPendingCreateMessage(false);
     }
@@ -123,7 +137,13 @@ export const WidgetChatScreen = () => {
       </WidgetHeader>
       <Conversation>
         <ConversationContent>
-          {toUIMessages(messages.results ?? [])?.map((message) => (
+          <InfiniteScrollTrigger
+            canLoadMore={canLoadMore}
+            isLoadingMore={isLoadingMore}
+            onLoadMore={handleLoadMore}
+            ref={topEleRef}
+          />
+          {toUIMessages(messages.results ?? [])?.map((message: any) => (
             <Message
               key={message.id}
               from={message.role === 'user' ? 'user' : 'assistant'}
@@ -131,6 +151,13 @@ export const WidgetChatScreen = () => {
               <MessageContent>
                 <Response>{message.content}</Response>
               </MessageContent>
+              {message.role === 'assistant' && (
+                <DicebearAvatar
+                  seed='assistant'
+                  size={32}
+                  imageUrl='/logo.svg'
+                />
+              )}
             </Message>
           ))}
         </ConversationContent>
@@ -149,7 +176,9 @@ export const WidgetChatScreen = () => {
             name='message'
             render={({ field }) => (
               <PromptInputTextarea
-                disabled={conversation?.status === 'resolved'}
+                disabled={
+                  conversation?.status === 'resolved' || isPendingCreateMessage
+                }
                 onChange={field.onChange}
                 onKeyDown={(e: React.KeyboardEvent) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
@@ -174,7 +203,13 @@ export const WidgetChatScreen = () => {
                 !form.formState.isValid ||
                 isPendingCreateMessage
               }
-              status='ready'
+              status={
+                isPendingCreateMessage
+                  ? 'submitted'
+                  : form.formState.errors.message
+                    ? 'error'
+                    : 'ready'
+              }
               type='submit'
             />
           </PromptInputToolbar>
