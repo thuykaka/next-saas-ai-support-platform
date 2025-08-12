@@ -1,3 +1,5 @@
+import { ConversationsView } from '@/modules/conversations/ui/views/conversations-view';
+
 export default function ConversationsPage() {
-  return <div>Conversations</div>;
+  return <ConversationsView />;
 }

@@ -67,6 +67,10 @@ export const create = action({
         prompt: args.prompt
       }
     );
+
+    return {
+      success: true
+    };
   }
 });
 

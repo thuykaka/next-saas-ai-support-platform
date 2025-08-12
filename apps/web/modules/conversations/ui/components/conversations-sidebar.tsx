@@ -51,7 +51,7 @@ export const ConversationsSidebar = () => {
           : conversationStatusFilter
     },
     {
-      initialNumItems: 2
+      initialNumItems: 10
     }
   );
 
@@ -64,8 +64,7 @@ export const ConversationsSidebar = () => {
   } = useInfiniteScroll({
     status: status,
     onLoadMore: loadMore,
-    loadSize: 2,
-    observerEnabled: false
+    loadSize: 10
   });
 
   return (
@@ -80,7 +79,7 @@ export const ConversationsSidebar = () => {
             )
           }
         >
-          <SelectTrigger className='hover:bg-accent hover:text-accent-foreground h-8 border-none px-1.5 shadow-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'>
+          <SelectTrigger className='hover:bg-accent hover:text-accent-foreground h-8 border-none px-4 shadow-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0'>
             <SelectValue placeholder='Select a conversation' />
           </SelectTrigger>
           <SelectContent>
@@ -118,7 +117,8 @@ export const ConversationsSidebar = () => {
       {isLoadingFirstPage ? (
         <ConversationsSkeleton />
       ) : (
-        <ScrollArea className='flex-1'>
+        // -56px-50px-53px
+        <ScrollArea className='max-h-[calc(100vh-159px)] flex-1'>
           <div className='flex w-full flex-col text-sm'>
             {conversations.length === 0 ? (
               <div className='flex min-h-[400px] items-center justify-center'>
@@ -150,7 +150,7 @@ export const ConversationsSidebar = () => {
                     {/* Active indicator */}
                     <div
                       className={cn(
-                        '--translate-y-1/2 absolute left-0 top-1/2 h-[64%] w-1 rounded-r-full bg-neutral-300 opacity-0 transition-opacity duration-300',
+                        'absolute left-0 top-1/2 h-[64%] w-1 -translate-y-1/2 rounded-r-full bg-neutral-300 opacity-0 transition-opacity duration-300',
                         pathname === `/conversations/${conversation._id}` &&
                           'opacity-100'
                       )}
