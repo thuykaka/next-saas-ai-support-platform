@@ -29,7 +29,7 @@ import { WIDGET_SCREENS } from '../../types';
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  email: z.email('Invalid email address')
+  email: z.string().email('Invalid email address')
 });
 
 export const WidgetAuthScreen = () => {

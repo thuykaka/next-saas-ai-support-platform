@@ -118,7 +118,7 @@ export const ConversationsSidebar = () => {
         <ConversationsSkeleton />
       ) : (
         // -56px-50px-53px
-        <ScrollArea className='max-h-[calc(100vh-159px)] flex-1'>
+        <ScrollArea className='max-h-[calc(100vh-159px-10px)] flex-1'>
           <div className='flex w-full flex-col text-sm'>
             {conversations.length === 0 ? (
               <div className='flex min-h-[400px] items-center justify-center'>

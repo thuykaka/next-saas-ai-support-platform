@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner';
 import '@workspace/ui/globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -25,6 +26,7 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontMono.variable} overflow-hidden overscroll-none font-sans antialiased`}
       >
         <NextTopLoader showSpinner={false} color='var(--primary)' />
+        <Toaster richColors />
         <ClerkProvider>
           <Providers>{children}</Providers>
         </ClerkProvider>

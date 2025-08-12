@@ -130,14 +130,16 @@ export const WidgetChatScreen = () => {
           <MenuIcon className='size-4' />
         </Button>
       </WidgetHeader>
-      <Conversation className='max-h-[calc(100vh-68px-64px-22px)] flex-1'>
+
+      <Conversation className='max-h-[calc(100vh-68px-64px-44px-22px-2px)] flex-1'>
         <ConversationContent>
-          {/* <InfiniteScrollTrigger
+          <InfiniteScrollTrigger
             canLoadMore={canLoadMore}
             isLoadingMore={isLoadingMore}
             onLoadMore={handleLoadMore}
             ref={topEleRef}
-          /> */}
+          />
+
           {toUIMessages(messages.results ?? [])?.map((message: any) => (
             <Message
               key={message.id}
@@ -156,6 +158,7 @@ export const WidgetChatScreen = () => {
             </Message>
           ))}
         </ConversationContent>
+        <ConversationScrollButton />
       </Conversation>
 
       {/* FORM */}
