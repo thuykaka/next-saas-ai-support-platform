@@ -1,0 +1,20 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - data:/var/lib/postgresql/data
+    networks:
+      - convex-network
+
+volumes:
+  data:
+    driver: local
+
+networks:
+  convex-network:
+    driver: bridge
