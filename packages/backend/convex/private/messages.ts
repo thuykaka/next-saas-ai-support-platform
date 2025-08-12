@@ -1,8 +1,11 @@
 import { saveMessage } from '@convex-dev/agent';
 import { paginationOptsValidator } from 'convex/server';
 import { ConvexError, v } from 'convex/values';
+import { openai } from '@ai-sdk/openai';
+import { generateText } from 'ai';
 import { components } from '../_generated/api';
-import { mutation, query } from '../_generated/server';
+import { action, mutation, query } from '../_generated/server';
+import { OPERATOR_MESSAGE_ENHANCEMENT_PROMPT } from '../constants';
 import supportAgent from '../system/ai/agents/supportAgent';
 
 export const getMany = query({
@@ -98,5 +101,38 @@ export const create = mutation({
     return {
       success: true
     };
+  }
+});
+
+export const enhanceResponse = action({
+  args: {
+    prompt: v.string(),
+    threadId: v.string()
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity || !identity.orgId) {
+      throw new ConvexError({
+        code: 'UNAUTHORIZED',
+        message: 'Unauthorized'
+      });
+    }
+
+    const response = await generateText({
+      model: openai('gpt-4o-mini'),
+      messages: [
+        {
+          role: 'system',
+          content: OPERATOR_MESSAGE_ENHANCEMENT_PROMPT
+        },
+        {
+          role: 'user',
+          content: args.prompt
+        }
+      ]
+    });
+
+    return response.text;
   }
 });

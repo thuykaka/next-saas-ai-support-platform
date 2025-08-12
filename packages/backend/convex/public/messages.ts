@@ -3,6 +3,8 @@ import { ConvexError, v } from 'convex/values';
 import { internal } from '../_generated/api';
 import { action, query } from '../_generated/server';
 import supportAgent from '../system/ai/agents/supportAgent';
+import { escalateConversationTool } from '../system/ai/tools/escalateConversation';
+import { resolveConversationTool } from '../system/ai/tools/resolveConversation';
 
 // Only can internal functions with action https://docs.convex.dev/functions/internal-functions
 export const create = action({
@@ -58,15 +60,29 @@ export const create = action({
       });
     }
 
-    await supportAgent.generateText(
-      ctx,
-      {
-        threadId: args.threadId
-      },
-      {
+    const shouldTriggerAgent = conversation.status === 'unresolved';
+
+    if (shouldTriggerAgent) {
+      await supportAgent.generateText(
+        ctx,
+        {
+          threadId: args.threadId
+        },
+        {
+          prompt: args.prompt,
+          tools: {
+            escalateConversationTool: escalateConversationTool,
+            resolveConversationTool: resolveConversationTool
+          }
+        }
+      );
+    } else {
+      // operator message
+      await supportAgent.saveMessage(ctx, {
+        threadId: args.threadId,
         prompt: args.prompt
-      }
-    );
+      });
+    }
 
     return {
       success: true

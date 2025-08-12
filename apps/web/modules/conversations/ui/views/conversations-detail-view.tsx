@@ -1,9 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { useThreadMessages, toUIMessages } from '@convex-dev/agent/react';
-import { useMutation, useQuery } from 'convex/react';
+import { useAction, useMutation, useQuery } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
 import { Id } from '@workspace/backend/_generated/dataModel';
 import {
@@ -27,9 +29,12 @@ import { Button } from '@workspace/ui/components/button';
 import { DicebearAvatar } from '@workspace/ui/components/dicebear-avatar';
 import { Form, FormField } from '@workspace/ui/components/form';
 import { InfiniteScrollTrigger } from '@workspace/ui/components/infinite-scroll-trigger';
+import { Skeleton } from '@workspace/ui/components/skeleton';
 import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
+import { cn } from '@workspace/ui/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { MoreHorizontalIcon, Wand2Icon } from 'lucide-react';
+import { Loader2Icon, MoreHorizontalIcon, Wand2Icon } from 'lucide-react';
+import { ConversationsStatusButton } from '@/modules/conversations/ui/components/conversations-status-button';
 
 type ConversationsDetailViewProps = {
   conversationId: Id<'conversations'>;
@@ -42,6 +47,10 @@ const formSchema = z.object({
 export const ConversationsDetailView = ({
   conversationId
 }: ConversationsDetailViewProps) => {
+  const [isPendingUpdateStatus, setIsPendingUpdateStatus] = useState(false);
+  const [isPendingEnhanceResponse, setIsPendingEnhanceResponse] =
+    useState(false);
+
   const conversation = useQuery(api.private.conversations.getOne, {
     conversationId
   });
@@ -91,12 +100,74 @@ export const ConversationsDetailView = ({
     }
   };
 
+  const updateConversationStatus = useMutation(
+    api.private.conversations.updateStatus
+  );
+
+  const handleToggleStatusButton = async () => {
+    if (!conversation) return;
+
+    const newStatus =
+      conversation.status === 'resolved'
+        ? 'unresolved'
+        : conversation.status === 'unresolved'
+          ? 'escalated'
+          : 'resolved';
+
+    setIsPendingUpdateStatus(true);
+
+    try {
+      await updateConversationStatus({
+        conversationId,
+        status: newStatus
+      });
+
+      toast.success('Conversation status updated');
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to update conversation status');
+    } finally {
+      setIsPendingUpdateStatus(false);
+    }
+  };
+
+  const callEnhanceResponse = useAction(api.private.messages.enhanceResponse);
+  const handleEnhanceResponse = async () => {
+    if (!conversation) return;
+
+    setIsPendingEnhanceResponse(true);
+
+    try {
+      const response = await callEnhanceResponse({
+        threadId: conversation.threadId,
+        prompt: form.getValues('message')
+      });
+      form.setValue('message', response);
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to enhance response');
+    } finally {
+      setIsPendingEnhanceResponse(false);
+    }
+  };
+
+  if (conversation === undefined || messages.status === 'LoadingFirstPage') {
+    return <ConversationDetailViewSkeleton />;
+  }
+
   return (
     <div className='bg-muted flex h-full flex-1 flex-col'>
       <header className='bg-background flex items-center justify-between border-b p-2.5'>
         <Button size='sm' variant='ghost'>
           <MoreHorizontalIcon />
         </Button>
+        {conversation && (
+          <ConversationsStatusButton
+            status={conversation.status}
+            onClick={handleToggleStatusButton}
+            isSubmitting={isPendingUpdateStatus}
+          />
+        )}
       </header>
 
       <Conversation className='max-h-[calc(100vh-159px-64px-44px-22px)] flex-1'>
@@ -142,7 +213,8 @@ export const ConversationsDetailView = ({
                   {...form.register('message')}
                   disabled={
                     conversation?.status === 'resolved' ||
-                    form.formState.isSubmitting
+                    form.formState.isSubmitting ||
+                    isPendingEnhanceResponse
                   }
                   onChange={field.onChange}
                   onKeyDown={(e: React.KeyboardEvent) => {
@@ -161,15 +233,23 @@ export const ConversationsDetailView = ({
               )}
             />
             <PromptInputToolbar>
-              <PromptInputButton>
+              <PromptInputButton
+                disabled={
+                  conversation?.status === 'resolved' ||
+                  isPendingEnhanceResponse ||
+                  !form.formState.isValid
+                }
+                onClick={handleEnhanceResponse}
+              >
                 <Wand2Icon size={16} />
-                Enhance
+                {isPendingEnhanceResponse ? 'Enhancing...' : 'Enhance'}
               </PromptInputButton>
               <PromptInputSubmit
                 disabled={
                   conversation?.status === 'resolved' ||
                   !form.formState.isValid ||
-                  form.formState.isSubmitting
+                  form.formState.isSubmitting ||
+                  isPendingEnhanceResponse
                 }
                 status={form.formState.isSubmitting ? 'submitted' : 'ready'}
                 type='submit'
@@ -177,6 +257,61 @@ export const ConversationsDetailView = ({
             </PromptInputToolbar>
           </PromptInput>
         </Form>
+      </div>
+    </div>
+  );
+};
+
+export const ConversationDetailViewSkeleton = () => {
+  return (
+    <div className='bg-muted flex h-full flex-1 flex-col'>
+      <header className='bg-background flex items-center justify-between border-b p-2.5'>
+        <Button size='sm' variant='ghost'>
+          <MoreHorizontalIcon />
+        </Button>
+        <Skeleton className='h-8 w-24' />
+      </header>
+
+      <Conversation className='max-h-[calc(100vh-159px-64px-44px-22px)] flex-1'>
+        <ConversationContent>
+          {Array.from({ length: 10 }).map((_, index) => {
+            const isUser = index % 2 === 0;
+            const widths = ['w-48', 'w-60', 'w-72'];
+            const width = widths[index % widths.length];
+
+            return (
+              <div
+                className={cn(
+                  'group flex w-full items-end justify-end gap-2 py-2 [&>div]:max-w-[80%]',
+                  isUser ? 'is-user' : 'is-assistant flex-row-reverse'
+                )}
+                key={index}
+              >
+                <Skeleton
+                  className={`h-9 ${width} rounded-lg bg-neutral-200`}
+                />
+                <Skeleton className='size-8 rounded-full bg-neutral-200' />
+              </div>
+            );
+          })}
+        </ConversationContent>
+      </Conversation>
+
+      {/* FORM */}
+      <div className='p-2'>
+        <PromptInput>
+          <PromptInputTextarea
+            disabled
+            placeholder='Type your response as an operator...'
+          />
+          <PromptInputToolbar>
+            <PromptInputButton disabled={true}>
+              <Wand2Icon size={16} />
+              Enhance
+            </PromptInputButton>
+            <PromptInputSubmit disabled status='ready' />
+          </PromptInputToolbar>
+        </PromptInput>
       </div>
     </div>
   );
