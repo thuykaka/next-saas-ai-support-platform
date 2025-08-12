@@ -81,3 +81,48 @@ export const getMany = query({
     };
   }
 });
+
+export const getOne = query({
+  args: {
+    conversationId: v.id('conversations')
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity || !identity.orgId) {
+      throw new ConvexError({
+        code: 'UNAUTHORIZED',
+        message: 'Unauthorized'
+      });
+    }
+
+    const conversation = await ctx.db.get(args.conversationId);
+
+    if (!conversation) {
+      throw new ConvexError({
+        code: 'NOT_FOUND',
+        message: 'Conversation not found'
+      });
+    }
+
+    if (conversation.orgId !== identity.orgId) {
+      throw new ConvexError({
+        code: 'UNAUTHORIZED',
+        message: 'Unauthorized'
+      });
+    }
+
+    const contactSession = await ctx.db.get(conversation.contactSessionId);
+
+    if (!contactSession) {
+      throw new ConvexError({
+        code: 'NOT_FOUND',
+        message: 'Contact session not found'
+      });
+    }
+
+    return {
+      ...conversation,
+      contactSession
+    };
+  }
+});

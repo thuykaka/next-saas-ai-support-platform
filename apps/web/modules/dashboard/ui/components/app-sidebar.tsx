@@ -71,9 +71,9 @@ export const AppSidebar = () => {
                 <SidebarMenuButton
                   asChild
                   tooltip={item.title}
-                  isActive={pathname === item.url}
+                  isActive={pathname.startsWith(item.url)}
                   className={cn(
-                    pathname === item.url &&
+                    pathname.startsWith(item.url) &&
                       'from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90! bg-gradient-to-b'
                   )}
                 >
@@ -96,9 +96,9 @@ export const AppSidebar = () => {
                 <SidebarMenuButton
                   asChild
                   tooltip={item.title}
-                  isActive={pathname === item.url}
+                  isActive={pathname.startsWith(item.url)}
                   className={cn(
-                    pathname === item.url &&
+                    pathname.startsWith(item.url) &&
                       'from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90! bg-gradient-to-b'
                   )}
                 >
@@ -121,9 +121,9 @@ export const AppSidebar = () => {
                 <SidebarMenuButton
                   asChild
                   tooltip={item.title}
-                  isActive={pathname === item.url}
+                  isActive={pathname.startsWith(item.url)}
                   className={cn(
-                    pathname === item.url &&
+                    pathname.startsWith(item.url) &&
                       'from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90! bg-gradient-to-b'
                   )}
                 >

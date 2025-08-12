@@ -19,7 +19,7 @@
         "ai": "4.3.19",
         "convex": "latest",
         "openai": "latest",
-        "zod": "^4.0.17"
+        "zod": "^4.0.5"
     },
     "devDependencies": {
         "@types/node": "^20",

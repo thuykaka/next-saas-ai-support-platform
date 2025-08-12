@@ -13,7 +13,7 @@ export const ConversationsLayout = ({
   return (
     <>
       <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
-        <div>
+        <div className='px-4'>
           <h2 className='text-xl font-bold tracking-tight'>Conversations</h2>
           <p className='text-muted-foreground text-sm'>
             Manage your conversations

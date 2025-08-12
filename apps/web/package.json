@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.28.1",
+    "@convex-dev/agent": "0.1.16",
+    "@hookform/resolvers": "^5.2.1",
     "@sentry/nextjs": "10",
     "@workspace/backend": "workspace:*",
     "@workspace/math": "workspace:*",
@@ -26,7 +28,9 @@
     "nextjs-toploader": "^3.8.16",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.62.0",
     "sonner": "^2.0.7",
+    "zod": "^4.0.5",
     "zustand": "^5.0.7"
   },
   "devDependencies": {
