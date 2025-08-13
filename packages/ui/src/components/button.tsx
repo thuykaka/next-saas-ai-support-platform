@@ -23,7 +23,9 @@ const buttonVariants = cva(
         tertiary:
           'bg-gradient-to-b from-[#3fb62f] to-[#318d25] text-white hover:to-[#318d25]/90',
         warning:
-          'bg-gradient-to-b from-yellow-500 to-[#be8b00] text-white hover:to-[#be8b00]/90'
+          'bg-gradient-to-b from-yellow-500 to-[#be8b00] text-white hover:to-[#be8b00]/90',
+        'primary-gradient':
+          'from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90! bg-gradient-to-b'
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
