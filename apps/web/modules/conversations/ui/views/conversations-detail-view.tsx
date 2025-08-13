@@ -33,7 +33,7 @@ import { Skeleton } from '@workspace/ui/components/skeleton';
 import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
 import { cn } from '@workspace/ui/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2Icon, MoreHorizontalIcon, Wand2Icon } from 'lucide-react';
+import { MoreHorizontalIcon, Wand2Icon } from 'lucide-react';
 import { ConversationsStatusButton } from '@/modules/conversations/ui/components/conversations-status-button';
 
 type ConversationsDetailViewProps = {

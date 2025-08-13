@@ -15,6 +15,7 @@ import {
 } from '@workspace/ui/components/ai-elements/message';
 import {
   PromptInput,
+  PromptInputButton,
   PromptInputSubmit,
   PromptInputTextarea,
   PromptInputToolbar
@@ -24,9 +25,16 @@ import { Button } from '@workspace/ui/components/button';
 import { DicebearAvatar } from '@workspace/ui/components/dicebear-avatar';
 import { Form, FormField } from '@workspace/ui/components/form';
 import { InfiniteScrollTrigger } from '@workspace/ui/components/infinite-scroll-trigger';
+import { Skeleton } from '@workspace/ui/components/skeleton';
 import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
+import { cn } from '@workspace/ui/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeftIcon, MenuIcon } from 'lucide-react';
+import {
+  ArrowLeftIcon,
+  MenuIcon,
+  MoreHorizontalIcon,
+  Wand2Icon
+} from 'lucide-react';
 import { useContactSessionId } from '@/modules/widget/store/use-contact-session-store';
 import {
   useConversationActions,
@@ -118,7 +126,7 @@ export const WidgetChatScreen = () => {
   };
 
   return (
-    <>
+    <div className='flex h-full flex-col'>
       <WidgetHeader className='flex items-center justify-between'>
         <div className='flex items-center gap-x-2'>
           <Button size='icon' variant='transparent' onClick={handleOnBack}>
@@ -131,38 +139,39 @@ export const WidgetChatScreen = () => {
         </Button>
       </WidgetHeader>
 
-      <Conversation className='max-h-[calc(100vh-68px-64px-44px-22px-2px)] flex-1'>
-        <ConversationContent>
-          <InfiniteScrollTrigger
-            canLoadMore={canLoadMore}
-            isLoadingMore={isLoadingMore}
-            onLoadMore={handleLoadMore}
-            ref={topEleRef}
-          />
+      <div className='h-full'>
+        <Conversation className='h-[calc(100vh-68px-64px-44px-22px)]'>
+          <ConversationContent>
+            <InfiniteScrollTrigger
+                canLoadMore={canLoadMore}
+                isLoadingMore={isLoadingMore}
+                onLoadMore={handleLoadMore}
+                ref={topEleRef}
+              />
 
-          {toUIMessages(messages.results ?? [])?.map((message: any) => (
-            <Message
-              key={message.id}
-              from={message.role === 'user' ? 'user' : 'assistant'}
-            >
-              <MessageContent>
-                <Response>{message.content}</Response>
-              </MessageContent>
-              {message.role === 'assistant' && (
-                <DicebearAvatar
-                  seed='assistant'
-                  size={32}
-                  imageUrl='/logo.svg'
-                />
-              )}
-            </Message>
-          ))}
-        </ConversationContent>
-        <ConversationScrollButton />
-      </Conversation>
+            {toUIMessages(messages.results ?? [])?.map((message: any) => (
+              <Message
+                key={message.id}
+                from={message.role === 'user' ? 'user' : 'assistant'}
+              >
+                <MessageContent>
+                  <Response>{message.content}</Response>
+                </MessageContent>
+                {message.role === 'assistant' && (
+                  <DicebearAvatar
+                    seed='assistant'
+                    size={32}
+                    imageUrl='/logo.svg'
+                  />
+                )}
+              </Message>
+            ))}
+          </ConversationContent>
+          <ConversationScrollButton />
+        </Conversation>
+      </div>
 
       {/* FORM */}
-
       <div className='p-2'>
         <Form {...form}>
           <PromptInput onSubmit={form.handleSubmit(onSubmit)}>
@@ -214,6 +223,6 @@ export const WidgetChatScreen = () => {
           </PromptInput>
         </Form>
       </div>
-    </>
+    </div>
   );
 };
