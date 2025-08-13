@@ -29,11 +29,17 @@ import { Button } from '@workspace/ui/components/button';
 import { DicebearAvatar } from '@workspace/ui/components/dicebear-avatar';
 import { Form, FormField } from '@workspace/ui/components/form';
 import { InfiniteScrollTrigger } from '@workspace/ui/components/infinite-scroll-trigger';
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup
+} from '@workspace/ui/components/resizable';
 import { Skeleton } from '@workspace/ui/components/skeleton';
 import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
 import { cn } from '@workspace/ui/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MoreHorizontalIcon, Wand2Icon } from 'lucide-react';
+import { ConversationsMetadata } from '@/modules/conversations/ui/components/conversations-metadata';
 import { ConversationsStatusButton } from '@/modules/conversations/ui/components/conversations-status-button';
 
 type ConversationsDetailViewProps = {
@@ -156,109 +162,117 @@ export const ConversationsDetailView = ({
   }
 
   return (
-    <div className='bg-muted flex h-full flex-1 flex-col'>
-      <header className='bg-background flex items-center justify-between border-b p-2.5'>
-        <Button size='sm' variant='ghost'>
-          <MoreHorizontalIcon />
-        </Button>
-        {conversation && (
-          <ConversationsStatusButton
-            status={conversation.status}
-            onClick={handleToggleStatusButton}
-            isSubmitting={isPendingUpdateStatus}
-          />
-        )}
-      </header>
-
-      <Conversation className='max-h-[calc(100vh-159px-64px-44px-22px)] flex-1'>
-        <ConversationContent>
-          <InfiniteScrollTrigger
-            canLoadMore={canLoadMore}
-            isLoadingMore={isLoadingMore}
-            onLoadMore={handleLoadMore}
-            ref={topEleRef}
-          />
-
-          {toUIMessages(messages.results ?? [])?.map((message: any) => (
-            <Message
-              key={message.id}
-              // reverse the role, we are assistant, user is the user
-              from={message.role === 'user' ? 'assistant' : 'user'}
-            >
-              <MessageContent>
-                <Response>{message.content}</Response>
-              </MessageContent>
-              {message.role === 'user' && (
-                <DicebearAvatar
-                  seed={conversation?.contactSessionId ?? 'user'}
-                  size={32}
-                />
-              )}
-            </Message>
-          ))}
-        </ConversationContent>
-        <ConversationScrollButton />
-      </Conversation>
-
-      {/* FORM */}
-      <div className='p-2'>
-        <Form {...form}>
-          <PromptInput onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              disabled={conversation?.status === 'resolved'}
-              name='message'
-              render={({ field }) => (
-                <PromptInputTextarea
-                  {...form.register('message')}
-                  disabled={
-                    conversation?.status === 'resolved' ||
-                    form.formState.isSubmitting ||
-                    isPendingEnhanceResponse
-                  }
-                  onChange={field.onChange}
-                  onKeyDown={(e: React.KeyboardEvent) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      form.handleSubmit(onSubmit)();
-                    }
-                  }}
-                  placeholder={
-                    conversation?.status === 'resolved'
-                      ? 'This conversation has been resolved'
-                      : 'Type your response as an operator...'
-                  }
-                  value={field.value}
-                />
-              )}
-            />
-            <PromptInputToolbar>
-              <PromptInputButton
-                disabled={
-                  conversation?.status === 'resolved' ||
-                  isPendingEnhanceResponse ||
-                  !form.formState.isValid
-                }
-                onClick={handleEnhanceResponse}
-              >
-                <Wand2Icon size={16} />
-                {isPendingEnhanceResponse ? 'Enhancing...' : 'Enhance'}
-              </PromptInputButton>
-              <PromptInputSubmit
-                disabled={
-                  conversation?.status === 'resolved' ||
-                  !form.formState.isValid ||
-                  form.formState.isSubmitting ||
-                  isPendingEnhanceResponse
-                }
-                status={form.formState.isSubmitting ? 'submitted' : 'ready'}
-                type='submit'
+    <ResizablePanelGroup direction='horizontal' className='h-full flex-1'>
+      <ResizablePanel defaultSize={75} className='h-full'>
+        <div className='bg-muted flex h-full flex-1 flex-col'>
+          <header className='bg-background flex items-center justify-between border-b p-2.5'>
+            <Button size='sm' variant='ghost'>
+              <MoreHorizontalIcon />
+            </Button>
+            {conversation && (
+              <ConversationsStatusButton
+                status={conversation.status}
+                onClick={handleToggleStatusButton}
+                isSubmitting={isPendingUpdateStatus}
               />
-            </PromptInputToolbar>
-          </PromptInput>
-        </Form>
-      </div>
-    </div>
+            )}
+          </header>
+
+          <Conversation className='max-h-[calc(100vh-159px-64px-44px-22px)] flex-1'>
+            <ConversationContent>
+              <InfiniteScrollTrigger
+                canLoadMore={canLoadMore}
+                isLoadingMore={isLoadingMore}
+                onLoadMore={handleLoadMore}
+                ref={topEleRef}
+              />
+
+              {toUIMessages(messages.results ?? [])?.map((message: any) => (
+                <Message
+                  key={message.id}
+                  // reverse the role, we are assistant, user is the user
+                  from={message.role === 'user' ? 'assistant' : 'user'}
+                >
+                  <MessageContent>
+                    <Response>{message.content}</Response>
+                  </MessageContent>
+                  {message.role === 'user' && (
+                    <DicebearAvatar
+                      seed={conversation?.contactSessionId ?? 'user'}
+                      size={32}
+                    />
+                  )}
+                </Message>
+              ))}
+            </ConversationContent>
+            <ConversationScrollButton />
+          </Conversation>
+
+          {/* FORM */}
+          <div className='p-2'>
+            <Form {...form}>
+              <PromptInput onSubmit={form.handleSubmit(onSubmit)}>
+                <FormField
+                  control={form.control}
+                  disabled={conversation?.status === 'resolved'}
+                  name='message'
+                  render={({ field }) => (
+                    <PromptInputTextarea
+                      {...form.register('message')}
+                      disabled={
+                        conversation?.status === 'resolved' ||
+                        form.formState.isSubmitting ||
+                        isPendingEnhanceResponse
+                      }
+                      onChange={field.onChange}
+                      onKeyDown={(e: React.KeyboardEvent) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          form.handleSubmit(onSubmit)();
+                        }
+                      }}
+                      placeholder={
+                        conversation?.status === 'resolved'
+                          ? 'This conversation has been resolved'
+                          : 'Type your response as an operator...'
+                      }
+                      value={field.value}
+                    />
+                  )}
+                />
+                <PromptInputToolbar>
+                  <PromptInputButton
+                    disabled={
+                      conversation?.status === 'resolved' ||
+                      isPendingEnhanceResponse ||
+                      !form.formState.isValid
+                    }
+                    onClick={handleEnhanceResponse}
+                  >
+                    <Wand2Icon size={16} />
+                    {isPendingEnhanceResponse ? 'Enhancing...' : 'Enhance'}
+                  </PromptInputButton>
+                  <PromptInputSubmit
+                    disabled={
+                      conversation?.status === 'resolved' ||
+                      !form.formState.isValid ||
+                      form.formState.isSubmitting ||
+                      isPendingEnhanceResponse
+                    }
+                    status={form.formState.isSubmitting ? 'submitted' : 'ready'}
+                    type='submit'
+                  />
+                </PromptInputToolbar>
+              </PromptInput>
+            </Form>
+          </div>
+        </div>
+      </ResizablePanel>
+      <ResizableHandle />
+      <ResizablePanel defaultSize={25} maxSize={25} minSize={20}>
+        <ConversationsMetadata conversation={conversation} />
+      </ResizablePanel>
+    </ResizablePanelGroup>
   );
 };
 
