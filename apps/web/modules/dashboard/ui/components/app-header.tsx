@@ -1,5 +1,7 @@
 import { Separator } from '@workspace/ui/components/separator';
 import { SidebarTrigger } from '@workspace/ui/components/sidebar';
+import { ThemeToggle } from '@/components/theme-toggle';
+import SearchWithKbar from './search-with-kbar';
 
 export const AppHeader = () => {
   return (
@@ -10,7 +12,8 @@ export const AppHeader = () => {
       </div>
 
       <div className='flex items-center gap-2 px-4 text-sm'>
-        Right side content
+        <SearchWithKbar />
+        <ThemeToggle />
       </div>
     </header>
   );

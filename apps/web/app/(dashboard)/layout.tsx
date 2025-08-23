@@ -1,3 +1,4 @@
+import KBar from '@workspace/ui/components/kbar';
 import {
   SidebarInset,
   SidebarProvider
@@ -24,7 +25,9 @@ export default async function DashboardLayout({
         <SidebarProvider defaultOpen={defaultOpen}>
           <AppSidebar />
           <SidebarInset>
-            <AppHeader />
+            <KBar>
+              <AppHeader />
+            </KBar>
             {/* page main content */}
             <div className='flex flex-1 flex-col'>{children}</div>
             {/* page main content ends */}
