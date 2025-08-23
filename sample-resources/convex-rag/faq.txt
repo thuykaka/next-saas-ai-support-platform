@@ -1,0 +1,159 @@
+Frequently Asked Questions - Customer Support
+
+=============================================
+ACCOUNT MANAGEMENT
+=============================================
+
+Q: How do I reset my password?
+A: To reset your password, follow these steps:
+1. Go to https://app.example.com/login
+2. Click the "Forgot Password?" link below the login button
+3. Enter your registered email address
+4. Check your email inbox for a password reset link (check spam folder if not received)
+5. Click the reset link within 24 hours (link expires after 24 hours)
+6. Create a new password with at least 8 characters, including one uppercase letter and one number
+7. Click "Update Password" to save your new password
+
+Q: How do I change my email address?
+A: To update your email address:
+1. Log into your account dashboard
+2. Navigate to Settings > Account Information
+3. Click "Edit" next to your current email
+4. Enter your new email address
+5. Verify the new email by clicking the link we send
+6. Your email will be updated once verified
+
+Q: How do I enable two-factor authentication?
+A: To secure your account with 2FA:
+1. Go to Settings > Security
+2. Click "Enable Two-Factor Authentication"
+3. Download an authenticator app (Google Authenticator or Authy)
+4. Scan the QR code with your authenticator app
+5. Enter the 6-digit code to verify setup
+6. Save your backup codes in a secure location
+
+Q: Can I have multiple accounts?
+A: Each email address can only be associated with one account. If you need multiple workspaces, you can create organizations within your account instead.
+
+=============================================
+BILLING & SUBSCRIPTIONS
+=============================================
+
+Q: What are your pricing plans?
+A: We offer three subscription tiers:
+
+STARTER PLAN - $9.99/month
+- 5 projects
+- 10GB storage
+- Email support
+- Basic analytics
+
+PROFESSIONAL PLAN - $29.99/month
+- Unlimited projects
+- 100GB storage
+- Priority email support
+- Advanced analytics
+- API access
+- Custom integrations
+
+ENTERPRISE PLAN - Custom pricing
+- Everything in Professional
+- Unlimited storage
+- Dedicated account manager
+- 24/7 phone support
+- Custom contracts
+- SLA guarantees
+Contact sales@example.com for Enterprise pricing
+
+Q: How do I upgrade or downgrade my plan?
+A: To change your subscription:
+1. Go to Settings > Billing
+2. Click "Change Plan"
+3. Select your new plan
+4. Review the prorated charges/credits
+5. Confirm the change
+Note: Upgrades take effect immediately, downgrades at the next billing cycle
+
+Q: What payment methods do you accept?
+A: We accept:
+- Credit cards (Visa, Mastercard, American Express)
+- Debit cards
+- PayPal
+- ACH bank transfers (Enterprise only)
+- Wire transfers (Enterprise only, annual billing)
+
+Q: How do I cancel my subscription?
+A: To cancel your subscription:
+1. Navigate to Settings > Billing
+2. Click "Cancel Subscription"
+3. Select a cancellation reason (optional)
+4. Click "Confirm Cancellation"
+5. You'll retain access until the end of your current billing period
+6. Your data will be available for download for 30 days after cancellation
+
+Q: Do you offer refunds?
+A: Yes, we offer a 30-day money-back guarantee for new customers. After 30 days, we provide prorated credits for unused time if you cancel mid-cycle. No refunds are given for used portions of the subscription period.
+
+=============================================
+FEATURES & FUNCTIONALITY
+=============================================
+
+Q: What file types can I upload?
+A: Supported file types include:
+- Documents: PDF, DOC, DOCX, TXT, RTF
+- Spreadsheets: XLS, XLSX, CSV
+- Images: JPG, PNG, GIF, SVG
+- Presentations: PPT, PPTX
+- Archives: ZIP, RAR
+Maximum file size: 100MB per file
+
+Q: How do I share projects with my team?
+A: To share a project:
+1. Open the project you want to share
+2. Click "Share" in the top right corner
+3. Enter team member email addresses
+4. Set permission level (View, Edit, or Admin)
+5. Add an optional message
+6. Click "Send Invitations"
+
+Q: Is there a mobile app?
+A: Yes! Our mobile apps are available for:
+- iOS: Download from the App Store (iOS 14+)
+- Android: Download from Google Play Store (Android 8+)
+Sign in with your existing account credentials to sync all your data.
+
+Q: How do I export my data?
+A: To export your data:
+1. Go to Settings > Data Management
+2. Click "Export Data"
+3. Select format (JSON, CSV, or PDF)
+4. Choose specific projects or export all
+5. Click "Generate Export"
+6. Download link will be emailed when ready
+
+=============================================
+TECHNICAL SUPPORT
+=============================================
+
+Q: What browsers do you support?
+A: We support the latest versions of:
+- Google Chrome
+- Mozilla Firefox  
+- Safari
+- Microsoft Edge
+- Opera
+Older browser versions may work but aren't officially supported.
+
+Q: Do you have an API?
+A: Yes, API access is available on Professional and Enterprise plans. Find your API key in Settings > API. Full documentation at https://docs.example.com/api
+
+Q: Is my data secure?
+A: Absolutely. We use:
+- 256-bit SSL encryption for all data transfers
+- AES-256 encryption for data at rest
+- SOC 2 Type II certified data centers
+- Regular third-party security audits
+- GDPR and CCPA compliant practices
+
+Q: What's your uptime guarantee?
+A: We maintain 99.9% uptime SLA for Enterprise customers and target 99.5% uptime for all other plans. Check our status page at https://status.example.com

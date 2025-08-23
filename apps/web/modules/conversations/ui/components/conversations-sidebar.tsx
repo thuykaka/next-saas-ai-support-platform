@@ -185,7 +185,7 @@ export const ConversationsSidebar = () => {
                               'text-muted-foreground line-clamp-1 text-xs',
                               !isLastMessageFromOperator &&
                                 conversation.status !== 'resolved' &&
-                                'font-bold text-black'
+                                'font-semibold text-foreground'
                             )}
                           >
                             {conversation.lastMessage?.text}

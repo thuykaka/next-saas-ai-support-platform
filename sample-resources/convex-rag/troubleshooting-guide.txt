@@ -1,0 +1,282 @@
+Troubleshooting Guide - Common Issues and Solutions
+
+=============================================
+LOGIN AND AUTHENTICATION ISSUES
+=============================================
+
+PROBLEM: Cannot log in - "Invalid credentials" error
+SOLUTIONS:
+1. Check that Caps Lock is off
+2. Ensure you're using the correct email (check for typos)
+3. Try copying and pasting your password from a password manager
+4. Clear browser cookies for our domain
+5. Try incognito/private browsing mode
+6. Reset your password using "Forgot Password"
+
+PROBLEM: Two-factor authentication code not working
+SOLUTIONS:
+1. Ensure your device time is synced correctly
+2. Wait for a new code (they refresh every 30 seconds)
+3. Try the next code that appears
+4. Use one of your backup codes
+5. Contact support to disable 2FA temporarily
+
+PROBLEM: Account locked after multiple failed attempts
+SOLUTIONS:
+1. Wait 30 minutes for automatic unlock
+2. Use "Forgot Password" to reset immediately
+3. Contact support if urgent access needed
+4. Check if someone else tried accessing your account
+
+PROBLEM: "Session expired" keeps appearing
+SOLUTIONS:
+1. Check "Remember me" when logging in
+2. Disable aggressive browser privacy settings
+3. Add our domain to browser exceptions
+4. Check if your IT department has session policies
+5. Use our desktop app for persistent sessions
+
+=============================================
+FILE UPLOAD AND DOWNLOAD ISSUES
+=============================================
+
+PROBLEM: File upload fails or gets stuck
+SOLUTIONS:
+1. Check file size (maximum 100MB per file)
+2. Verify file type is supported (see FAQ)
+3. Ensure stable internet connection
+4. Try uploading one file at a time
+5. Disable browser extensions temporarily
+6. Use Chrome or Firefox for best compatibility
+7. Clear browser cache and try again
+
+PROBLEM: "File type not supported" error
+SOLUTIONS:
+1. Check our supported formats: PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, CSV, JPG, PNG
+2. Convert file to supported format
+3. Compress file if it's an unsupported archive type
+4. Contact support for special file type requests
+
+PROBLEM: Downloads fail or corrupted files
+SOLUTIONS:
+1. Right-click and "Save as" instead of clicking
+2. Disable download managers or accelerators
+3. Check available disk space
+4. Try different browser
+5. Ensure antivirus isn't blocking downloads
+6. Use our desktop app for large file downloads
+
+PROBLEM: Bulk upload not working
+SOLUTIONS:
+1. Limit to 50 files per bulk upload
+2. Ensure total size under 500MB
+3. Use Chrome for folder uploads
+4. Check for special characters in filenames
+5. Remove files with very long names (>255 chars)
+
+=============================================
+PERFORMANCE AND LOADING ISSUES
+=============================================
+
+PROBLEM: Platform loading slowly
+SOLUTIONS:
+1. Check your internet speed (minimum 5 Mbps recommended)
+2. Clear browser cache and cookies
+3. Disable browser extensions
+4. Try different browser
+5. Check our status page: https://status.example.com
+6. Reduce number of open tabs
+7. Update to latest browser version
+
+PROBLEM: Features not loading or buttons not working
+SOLUTIONS:
+1. Hard refresh page (Ctrl/Cmd + Shift + R)
+2. Clear browser cache completely
+3. Disable ad blockers for our domain
+4. Check JavaScript is enabled
+5. Update your browser
+6. Try incognito mode
+7. Check firewall settings
+
+PROBLEM: Real-time updates not showing
+SOLUTIONS:
+1. Check WebSocket connection in browser console
+2. Disable VPN temporarily
+3. Check corporate firewall rules
+4. Refresh page to re-establish connection
+5. Ensure browser supports WebSockets
+
+=============================================
+TEAM AND SHARING ISSUES
+=============================================
+
+PROBLEM: Cannot invite team members
+SOLUTIONS:
+1. Verify you have Admin or Editor permissions
+2. Check if you've reached team member limit
+3. Ensure email addresses are formatted correctly
+4. Check recipient's spam folder
+5. Resend invitation after 24 hours
+6. Verify organization settings allow invites
+
+PROBLEM: Team member cannot access shared content
+SOLUTIONS:
+1. Verify their permission level
+2. Check if content is in archived project
+3. Ensure they've accepted invitation
+4. Have them log out and back in
+5. Check organization access settings
+6. Verify no IP restrictions are active
+
+PROBLEM: Permissions not working correctly
+SOLUTIONS:
+1. Wait 5 minutes for changes to propagate
+2. Have user refresh their browser
+3. Check for conflicting team/project permissions
+4. Review organization-wide settings
+5. Contact admin to verify setup
+
+=============================================
+NOTIFICATION ISSUES
+=============================================
+
+PROBLEM: Not receiving email notifications
+SOLUTIONS:
+1. Check notification settings in profile
+2. Verify email address is correct
+3. Check spam/junk folder
+4. Add noreply@example.com to contacts
+5. Ask IT to whitelist our domain
+6. Check if emails are being forwarded
+7. Try different email address
+
+PROBLEM: Too many notifications
+SOLUTIONS:
+1. Go to Settings > Notifications
+2. Choose "Important only" preset
+3. Customize per project settings
+4. Set quiet hours
+5. Batch notifications to daily digest
+6. Mute specific conversations
+
+PROBLEM: Desktop notifications not working
+SOLUTIONS:
+1. Allow notifications when browser prompts
+2. Check OS notification settings
+3. Ensure browser has permission
+4. Try our desktop app instead
+5. Check Do Not Disturb mode is off
+
+=============================================
+INTEGRATION PROBLEMS
+=============================================
+
+PROBLEM: Google Drive sync not working
+SOLUTIONS:
+1. Reauthorize Google account connection
+2. Check Google account permissions
+3. Ensure not exceeding Google API limits
+4. Try disconnecting and reconnecting
+5. Verify files aren't in Google Vault hold
+
+PROBLEM: Slack notifications failing
+SOLUTIONS:
+1. Reinstall Slack app from our integrations page
+2. Check Slack workspace permissions
+3. Ensure bot is not removed from channels
+4. Verify webhook URL is still valid
+5. Contact Slack workspace admin
+
+PROBLEM: API calls returning errors
+SOLUTIONS:
+1. Verify API key is correct and active
+2. Check rate limits (see API docs)
+3. Ensure proper authentication headers
+4. Verify endpoint URLs are correct
+5. Check API version compatibility
+6. Review error codes in our API docs
+
+=============================================
+MOBILE APP ISSUES
+=============================================
+
+PROBLEM: Cannot log into mobile app
+SOLUTIONS:
+1. Ensure using latest app version
+2. Check internet connectivity
+3. Try QR code login from web
+4. Clear app cache in settings
+5. Reinstall the app
+6. Check if biometric login is interfering
+
+PROBLEM: Sync not working on mobile
+SOLUTIONS:
+1. Check app has background refresh enabled
+2. Ensure sufficient storage space
+3. Verify internet connection
+4. Pull down to force refresh
+5. Check sync settings in app
+6. Log out and back in
+
+PROBLEM: Mobile app crashing
+SOLUTIONS:
+1. Update to latest version
+2. Restart your device
+3. Clear app cache
+4. Free up device storage
+5. Reinstall the app
+6. Report crash logs to support
+
+=============================================
+BILLING AND PAYMENT ISSUES
+=============================================
+
+PROBLEM: Payment failed or declined
+SOLUTIONS:
+1. Verify card details are correct
+2. Ensure sufficient funds available
+3. Contact bank about international charges
+4. Try different payment method
+5. Check if card expired
+6. Disable VPN when making payment
+
+PROBLEM: Not seeing correct plan features
+SOLUTIONS:
+1. Log out and back in
+2. Wait 10 minutes after upgrade
+3. Clear browser cache
+4. Check payment processed successfully
+5. Verify correct account logged in
+6. Contact billing support
+
+=============================================
+IF ALL ELSE FAILS
+=============================================
+
+If none of these solutions work:
+
+1. Contact Support
+   - Email: support@example.com
+   - Live Chat: Available 9 AM - 6 PM EST
+   - Response time: Within 24 hours
+
+2. When contacting support, provide:
+   - Your account email
+   - Description of the issue
+   - Steps you've already tried
+   - Screenshots if applicable
+   - Browser and OS information
+   - Any error messages verbatim
+
+3. Check Service Status
+   - Visit: https://status.example.com
+   - Subscribe to status updates
+   - Follow @examplestatus on Twitter
+
+4. Community Help
+   - Forum: https://community.example.com
+   - Search existing solutions
+   - Post your question
+   - Help others with their issues
+
+Remember: Most issues can be resolved by clearing cache, using a different browser, or checking our status page for known issues.

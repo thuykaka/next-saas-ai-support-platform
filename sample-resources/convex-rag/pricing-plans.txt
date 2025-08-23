@@ -1,0 +1,237 @@
+Pricing Plans - Example Platform
+
+Last Updated: January 15, 2024
+
+=============================================
+AVAILABLE PLANS
+=============================================
+
+STARTER PLAN
+------------
+Price: $9.99/month (billed monthly)
+       $95.88/year (billed annually - save 20%)
+
+Perfect for individuals and small teams just getting started.
+
+Features:
+✓ Up to 3 team members
+✓ 5 active projects
+✓ 10GB storage
+✓ Basic integrations (Google Drive, Dropbox)
+✓ Email support (48-hour response)
+✓ Mobile app access
+✓ SSL encryption
+✓ Daily backups
+✓ CSV export
+
+Limits:
+- 100 API calls/hour
+- 1,000 tasks per project
+- 30-day data retention
+- No custom branding
+- No advanced analytics
+
+=============================================
+
+PROFESSIONAL PLAN (Most Popular)
+---------------------------------
+Price: $29.99/month (billed monthly)
+       $287.88/year (billed annually - save 20%)
+
+Ideal for growing teams and businesses.
+
+Everything in Starter, plus:
+✓ Up to 20 team members
+✓ Unlimited projects
+✓ 100GB storage
+✓ All integrations (Slack, Trello, Zapier, etc.)
+✓ Priority email support (24-hour response)
+✓ Live chat support (business hours)
+✓ API access
+✓ Advanced analytics and reporting
+✓ Custom fields and workflows
+✓ Time tracking
+✓ Gantt charts
+✓ Guest access
+✓ Two-factor authentication
+✓ Audit logs
+✓ Webhook support
+
+Limits:
+- 1,000 API calls/hour
+- Unlimited tasks
+- 1-year data retention
+- Basic custom branding
+
+=============================================
+
+ENTERPRISE PLAN
+---------------
+Price: Custom pricing
+       Contact sales@example.com
+
+For large organizations with advanced needs.
+
+Everything in Professional, plus:
+✓ Unlimited team members
+✓ Unlimited storage
+✓ Dedicated account manager
+✓ 24/7 phone support
+✓ 99.9% uptime SLA
+✓ Custom integrations
+✓ Single Sign-On (SSO)
+✓ Advanced security features
+✓ HIPAA compliance available
+✓ Custom contract terms
+✓ Invoice billing
+✓ Training and onboarding
+✓ API rate limits negotiable
+✓ Dedicated infrastructure option
+✓ White-label options
+✓ Priority feature requests
+
+Custom Features:
+- Unlimited API calls
+- Unlimited data retention
+- Full custom branding
+- Custom roles and permissions
+- Advanced automation
+- Dedicated support team
+
+=============================================
+PLAN COMPARISON
+=============================================
+
+Feature               | Starter  | Professional | Enterprise
+---------------------|----------|--------------|------------
+Team Members         | 3        | 20           | Unlimited
+Projects             | 5        | Unlimited    | Unlimited
+Storage              | 10GB     | 100GB        | Unlimited
+API Access           | No       | Yes          | Yes
+API Rate Limit       | N/A      | 1,000/hr     | Custom
+Support              | Email    | Email+Chat   | 24/7 All
+Response Time        | 48hr     | 24hr         | 1hr
+Integrations         | Basic    | All          | All+Custom
+Analytics            | Basic    | Advanced     | Enterprise
+Custom Workflows     | No       | Yes          | Yes
+SSO                  | No       | No           | Yes
+SLA                  | No       | No           | 99.9%
+Training             | Docs     | Docs+Videos  | Personal
+Backup Frequency     | Daily    | Hourly       | Real-time
+Data Retention       | 30 days  | 1 year       | Unlimited
+
+=============================================
+ADD-ONS (Available for all plans)
+=============================================
+
+Extra Storage
+- 50GB: $9.99/month
+- 100GB: $14.99/month
+- 500GB: $49.99/month
+
+Additional Team Members
+- Professional: $5/user/month
+- Starter: $3/user/month
+
+Premium Support
+- 24/7 chat support: $14.99/month
+- Phone support: $29.99/month
+- Dedicated slack channel: $99.99/month
+
+Advanced Features
+- White-label branding: $49.99/month
+- Advanced automation: $29.99/month
+- Custom reports: $19.99/month
+
+=============================================
+BILLING INFORMATION
+=============================================
+
+Payment Methods Accepted:
+- Credit Cards (Visa, Mastercard, Amex)
+- Debit Cards
+- PayPal
+- ACH/Bank Transfer (Enterprise only)
+- Wire Transfer (Annual Enterprise only)
+- Purchase Orders (Enterprise only)
+
+Billing Cycles:
+- Monthly: Charged on the same date each month
+- Annual: Charged once per year (20% discount)
+- Multi-year: Available for Enterprise (additional discounts)
+
+Currency:
+- All prices in USD
+- EUR and GBP pricing available on request
+- Enterprise can negotiate local currency
+
+Taxes:
+- Prices exclude applicable taxes
+- VAT/GST added where required
+- Tax-exempt? Provide certificate
+
+=============================================
+FREQUENTLY ASKED QUESTIONS
+=============================================
+
+Can I change plans anytime?
+Yes! Upgrade immediately, downgrade at next billing cycle.
+
+Is there a free trial?
+Yes, 14-day free trial for Professional plan. No credit card required.
+
+What happens when I hit limits?
+Soft limits with notifications. Hard limits require upgrade.
+
+Can I get a discount?
+- Annual billing: 20% off
+- Non-profits: 30% off
+- Education: 50% off
+- Startups: Apply for startup program
+
+Do you offer refunds?
+30-day money-back guarantee for new customers.
+
+What if I need more than Enterprise?
+Contact sales for custom infrastructure and requirements.
+
+Can I pause my subscription?
+Yes, for up to 3 months. Contact support.
+
+=============================================
+SPECIAL OFFERS
+=============================================
+
+Current Promotions:
+- New customers: First month 50% off with code WELCOME50
+- Annual upgrade: Get 2 months free
+- Referral program: $50 credit for each referral
+
+Startup Program:
+- 80% off Professional plan for 1 year
+- Must be less than 2 years old
+- Under $1M in funding
+- Apply at example.com/startups
+
+Education Discount:
+- 50% off all plans
+- Valid .edu email required
+- Verification required
+
+Non-Profit Discount:
+- 30% off all plans
+- 501(c)(3) verification required
+- Apply at example.com/nonprofits
+
+=============================================
+
+Ready to get started?
+Sign up at https://example.com/signup
+
+Questions about pricing?
+Contact our sales team:
+- Email: sales@example.com
+- Phone: +1 (555) 123-4567
+- Chat: Available on website
+
+All prices subject to change with 30 days notice to existing customers.
