@@ -184,6 +184,7 @@ export const ConversationsSidebar = () => {
                             className={cn(
                               'text-muted-foreground line-clamp-1 text-xs',
                               !isLastMessageFromOperator &&
+                                conversation.status !== 'resolved' &&
                                 'font-bold text-black'
                             )}
                           >

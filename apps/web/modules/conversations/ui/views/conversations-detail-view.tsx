@@ -301,10 +301,8 @@ export const ConversationDetailViewSkeleton = () => {
                 )}
                 key={index}
               >
-                <Skeleton
-                  className={`h-9 ${width} rounded-lg bg-neutral-200`}
-                />
-                <Skeleton className='size-8 rounded-full bg-neutral-200' />
+                <Skeleton className={`h-9 ${width} bg-secondary rounded-lg`} />
+                <Skeleton className='bg-secondary size-8 rounded-full' />
               </div>
             );
           })}

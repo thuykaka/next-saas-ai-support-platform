@@ -46,3 +46,5 @@ Summary:
     - External API integrations
     - Static file serving
     - Server-side rendering
+
+https://stack.convex.dev/self-hosted-develop-and-deploy

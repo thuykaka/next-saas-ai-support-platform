@@ -87,6 +87,11 @@ export const create = mutation({
         code: 'BAD_REQUEST',
         message: 'Conversation is resolved'
       });
+    } else if (conversation.status === 'unresolved') {
+      // when have a message between ai and user, we need to escalate the conversation -> ai not hold the conversation
+      await ctx.db.patch(conversation._id, {
+        status: 'escalated'
+      });
     }
 
     await saveMessage(ctx, components.agent, {
