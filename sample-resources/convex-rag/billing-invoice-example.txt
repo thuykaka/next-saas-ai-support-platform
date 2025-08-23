@@ -1,0 +1,119 @@
+INVOICE
+
+=============================================
+INVOICE DETAILS
+=============================================
+
+Invoice Number: INV-2024-001847
+Invoice Date: January 15, 2024
+Due Date: February 14, 2024
+Status: PAID
+
+=============================================
+VENDOR INFORMATION
+=============================================
+
+Example Platform Inc.
+548 Market Street, Suite 500
+San Francisco, CA 94104
+United States
+
+Tax ID: 87-1234567
+Email: billing@example.com
+Phone: +1 (555) 123-4567
+
+=============================================
+BILL TO
+=============================================
+
+Customer: ACME Corporation
+Account ID: CUST-789456
+Contact: John Smith
+Email: john.smith@acme.com
+Phone: +1 (555) 987-6543
+
+Billing Address:
+123 Business Avenue
+Suite 1000
+New York, NY 10001
+United States
+
+=============================================
+SUBSCRIPTION DETAILS
+=============================================
+
+Plan: Professional Plan
+Billing Period: January 15, 2024 - February 14, 2024
+Payment Method: Credit Card ending in 4242
+
+=============================================
+INVOICE BREAKDOWN
+=============================================
+
+Line Items:
+
+1. Professional Plan - Monthly Subscription
+   Quantity: 1
+   Unit Price: $29.99
+   Subtotal: $29.99
+
+2. Additional Storage (50GB)
+   Quantity: 1
+   Unit Price: $9.99
+   Subtotal: $9.99
+
+3. Premium Support Add-on
+   Quantity: 1
+   Unit Price: $14.99
+   Subtotal: $14.99
+
+=============================================
+SUMMARY
+=============================================
+
+Subtotal: $54.97
+Discount (10% - LOYAL customer): -$5.50
+Taxable Amount: $49.47
+Sales Tax (8.875% - NY): $4.39
+-------------------
+TOTAL DUE: $53.86
+
+=============================================
+PAYMENT INFORMATION
+=============================================
+
+Payment Received: January 15, 2024
+Payment Method: Visa ending in 4242
+Transaction ID: TXN-2024-789456
+Amount Paid: $53.86
+
+Thank you for your payment!
+
+=============================================
+USAGE SUMMARY FOR BILLING PERIOD
+=============================================
+
+Projects Created: 15
+Active Team Members: 8
+Storage Used: 67.3 GB / 150 GB
+API Calls: 45,231 / 100,000
+Support Tickets: 3 (all resolved)
+
+=============================================
+NOTES
+=============================================
+
+- Your next billing date is February 15, 2024
+- You saved $5.50 this month with your loyalty discount
+- Upgrade to Enterprise for unlimited API calls
+- Download this invoice as PDF from your billing dashboard
+
+=============================================
+
+For billing questions, contact:
+Email: billing@example.com
+Phone: +1 (555) 123-4567
+Hours: Monday-Friday, 9 AM - 6 PM EST
+
+Tax regulations require us to collect sales tax based on your location. 
+This invoice serves as your official receipt.

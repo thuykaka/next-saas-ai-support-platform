@@ -29,7 +29,7 @@ export default async function DashboardLayout({
               <AppHeader />
             </KBar>
             {/* page main content */}
-            <div className='flex flex-1 flex-col'>{children}</div>
+            <div className='flex flex-1 flex-col py-2'>{children}</div>
             {/* page main content ends */}
           </SidebarInset>
         </SidebarProvider>

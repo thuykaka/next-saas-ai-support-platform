@@ -1,0 +1,362 @@
+API Documentation - REST API Reference
+
+=============================================
+GETTING STARTED WITH THE API
+=============================================
+
+Base URL: https://api.example.com/v2
+Rate Limits: 
+- Free: 100 requests/hour
+- Pro: 1,000 requests/hour  
+- Enterprise: 10,000 requests/hour
+
+All responses return JSON format.
+
+=============================================
+AUTHENTICATION
+=============================================
+
+All API requests require authentication using an API key.
+
+Getting Your API Key:
+1. Log into your account
+2. Navigate to Settings > API Access
+3. Click "Generate New API Key"
+4. Copy the key immediately (shown only once)
+5. Store securely - treat like a password
+
+Using Your API Key:
+Include in request header:
+Authorization: Bearer YOUR_API_KEY
+
+Example:
+curl -H "Authorization: Bearer abc123xyz789" \
+     https://api.example.com/v2/projects
+
+=============================================
+CORE ENDPOINTS
+=============================================
+
+PROJECTS
+--------
+
+GET /projects
+List all projects
+Parameters:
+- page (optional): Page number, default 1
+- limit (optional): Items per page, default 20, max 100
+- status (optional): active, archived, all
+
+Response:
+{
+  "data": [
+    {
+      "id": "proj_123",
+      "name": "Marketing Campaign",
+      "description": "Q1 2024 campaign",
+      "created_at": "2024-01-15T10:00:00Z",
+      "status": "active",
+      "member_count": 5
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "total_pages": 3,
+    "total_count": 47
+  }
+}
+
+POST /projects
+Create new project
+Body:
+{
+  "name": "New Project",
+  "description": "Project description",
+  "privacy": "private" // private, team, public
+}
+
+GET /projects/{id}
+Get specific project details
+
+PUT /projects/{id}
+Update project
+
+DELETE /projects/{id}
+Delete project (requires admin permission)
+
+=============================================
+
+TEAM MEMBERS
+------------
+
+GET /projects/{id}/members
+List project members
+
+POST /projects/{id}/members
+Add team member
+Body:
+{
+  "email": "user@example.com",
+  "role": "editor" // admin, editor, viewer
+}
+
+DELETE /projects/{id}/members/{user_id}
+Remove team member
+
+=============================================
+
+FILES
+-----
+
+GET /projects/{id}/files
+List project files
+Parameters:
+- folder_id (optional): Filter by folder
+- type (optional): Filter by file type
+
+POST /projects/{id}/files
+Upload file (multipart/form-data)
+Fields:
+- file: File data
+- folder_id (optional): Target folder
+- description (optional): File description
+
+GET /files/{id}
+Get file metadata
+
+GET /files/{id}/download
+Download file (returns redirect to secure URL)
+
+DELETE /files/{id}
+Delete file
+
+=============================================
+
+TASKS
+-----
+
+GET /projects/{id}/tasks
+List project tasks
+Parameters:
+- status (optional): pending, in_progress, completed
+- assigned_to (optional): User ID
+
+POST /projects/{id}/tasks
+Create task
+Body:
+{
+  "title": "Task title",
+  "description": "Task details",
+  "due_date": "2024-02-01",
+  "assigned_to": "user_123",
+  "priority": "high" // low, medium, high
+}
+
+PUT /tasks/{id}
+Update task
+
+PUT /tasks/{id}/status
+Update task status
+Body:
+{
+  "status": "completed"
+}
+
+DELETE /tasks/{id}
+Delete task
+
+=============================================
+
+USER ACCOUNT
+------------
+
+GET /user
+Get current user info
+
+PUT /user
+Update user profile
+Body:
+{
+  "name": "John Doe",
+  "timezone": "America/New_York"
+}
+
+GET /user/usage
+Get API usage statistics
+
+=============================================
+ERROR HANDLING
+=============================================
+
+All errors return consistent format:
+
+{
+  "error": {
+    "code": "resource_not_found",
+    "message": "The requested project does not exist",
+    "details": {
+      "resource_type": "project",
+      "resource_id": "proj_123"
+    }
+  }
+}
+
+Common Error Codes:
+- invalid_api_key: Authentication failed
+- rate_limit_exceeded: Too many requests
+- resource_not_found: Item doesn't exist
+- permission_denied: Insufficient permissions
+- validation_error: Invalid input data
+- server_error: Internal server error
+
+HTTP Status Codes:
+- 200: Success
+- 201: Created
+- 204: No content (successful delete)
+- 400: Bad request
+- 401: Unauthorized
+- 403: Forbidden
+- 404: Not found
+- 429: Rate limit exceeded
+- 500: Server error
+
+=============================================
+PAGINATION
+=============================================
+
+List endpoints support pagination:
+
+Request:
+GET /projects?page=2&limit=50
+
+Response includes meta:
+{
+  "data": [...],
+  "meta": {
+    "page": 2,
+    "per_page": 50,
+    "total_pages": 5,
+    "total_count": 234,
+    "has_next": true,
+    "has_prev": true
+  },
+  "links": {
+    "first": "/projects?page=1&limit=50",
+    "prev": "/projects?page=1&limit=50",
+    "next": "/projects?page=3&limit=50",
+    "last": "/projects?page=5&limit=50"
+  }
+}
+
+=============================================
+WEBHOOKS (Pro Feature)
+=============================================
+
+Configure webhooks to receive real-time events:
+
+POST /webhooks
+Create webhook
+Body:
+{
+  "url": "https://your-site.com/webhook",
+  "events": ["project.created", "task.completed"],
+  "secret": "your_webhook_secret"
+}
+
+Events Available:
+- project.created
+- project.updated
+- project.deleted
+- task.created
+- task.updated
+- task.completed
+- file.uploaded
+- member.added
+- member.removed
+
+Webhook Payload Example:
+{
+  "event": "task.completed",
+  "created_at": "2024-01-20T15:30:00Z",
+  "data": {
+    "task_id": "task_789",
+    "project_id": "proj_123",
+    "completed_by": "user_456"
+  }
+}
+
+Verify webhook signatures using HMAC-SHA256 with your secret.
+
+=============================================
+RATE LIMITING
+=============================================
+
+Rate limit info included in headers:
+- X-RateLimit-Limit: Request limit
+- X-RateLimit-Remaining: Requests remaining
+- X-RateLimit-Reset: Unix timestamp when limit resets
+
+When rate limited, response includes:
+{
+  "error": {
+    "code": "rate_limit_exceeded",
+    "message": "API rate limit exceeded",
+    "retry_after": 3600
+  }
+}
+
+=============================================
+SDK AND LIBRARIES
+=============================================
+
+Official SDKs available:
+- JavaScript/Node.js: npm install @example/api-sdk
+- Python: pip install example-api
+- Ruby: gem install example-api
+- PHP: composer require example/api-sdk
+
+Example (JavaScript):
+```javascript
+const ExampleAPI = require('@example/api-sdk');
+const client = new ExampleAPI('YOUR_API_KEY');
+
+// List projects
+const projects = await client.projects.list();
+
+// Create task
+const task = await client.tasks.create('proj_123', {
+  title: 'New task',
+  due_date: '2024-02-01'
+});
+```
+
+=============================================
+API CHANGELOG
+=============================================
+
+v2.3 (Current)
+- Added file search endpoint
+- Improved error messages
+- Added webhook signature verification
+
+v2.2
+- Added bulk operations
+- Increased rate limits for Pro users
+- Added task dependencies
+
+v2.1
+- Initial public release
+- Core CRUD operations
+- Basic webhook support
+
+=============================================
+SUPPORT
+=============================================
+
+API Support:
+- Email: api@example.com
+- Developer Forum: https://developers.example.com
+- Status: https://status.example.com
+- Changelog: https://api.example.com/changelog
+
+Need higher rate limits? Contact sales@example.com

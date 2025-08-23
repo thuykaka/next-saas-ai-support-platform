@@ -1,14 +1,24 @@
 import {
   contentHashFromArrayBuffer,
+  Entry,
+  EntryId,
   guessMimeTypeFromContents,
   guessMimeTypeFromExtension,
   vEntryId
 } from '@convex-dev/rag';
+import { paginationOptsValidator, PaginationResult } from 'convex/server';
 import { ConvexError, v } from 'convex/values';
 import { Id } from '../_generated/dataModel';
-import { action } from '../_generated/server';
+import { action, query, QueryCtx } from '../_generated/server';
 import { extractTextContent } from '../lib/extractTextContent';
 import { rag } from '../system/ai/rag';
+
+type EntryMetadata = {
+  storageId: Id<'_storage'>;
+  uploadedBy: string;
+  fileName: string;
+  category: string;
+};
 
 const getMimeType = (filename: string, bytes: ArrayBuffer): string => {
   return (
@@ -57,9 +67,10 @@ export const addFile = action({
       title: fileName,
       metadata: {
         storageId,
+        fileName,
         uploadedBy: identity.orgId,
         category: category ?? 'Other'
-      },
+      } as EntryMetadata,
       contentHash: await contentHashFromArrayBuffer(bytes) // avoid re-adding the same file
     });
 
@@ -134,3 +145,120 @@ export const deleteFile = action({
     });
   }
 });
+
+export const getFiles = query({
+  args: {
+    category: v.optional(v.string()),
+    paginationOpts: paginationOptsValidator
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity || !identity.orgId) {
+      throw new ConvexError({
+        code: 'UNAUTHORIZED',
+        message: 'Unauthorized'
+      });
+    }
+
+    const namespace = await rag.getNamespace(ctx, {
+      namespace: identity.orgId.toString()
+    });
+
+    if (!namespace) {
+      return {
+        page: [],
+        isDone: true,
+        continueCursor: ''
+      };
+    }
+
+    const results = await rag.list(ctx, {
+      namespaceId: namespace.namespaceId,
+      paginationOpts: args.paginationOpts
+    });
+
+    const getFileReqs = results.page.map((result) => {
+      return convertEntryToPublicFile(ctx, result);
+    });
+
+    const files = await Promise.all(getFileReqs);
+
+    const filteredFiles = files.filter((file) => {
+      if (args.category) {
+        return file.category === args.category;
+      }
+      return true;
+    });
+
+    return {
+      page: filteredFiles,
+      isDone: results.isDone,
+      continueCursor: results.continueCursor
+    };
+  }
+});
+
+export type PublicFile = {
+  id: EntryId;
+  name: string;
+  type: string;
+  size: string;
+  status: 'ready' | 'processing' | 'error';
+  url: string | null;
+  category: string;
+};
+
+const formatFileSize = (size: number): string => {
+  if (size === 0) {
+    return '0 B';
+  }
+  const K = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(size) / Math.log(K));
+  return `${Number.parseFloat((size / K ** i).toFixed(1))} ${sizes[i]}`;
+};
+
+const convertEntryToPublicFile = async (
+  ctx: QueryCtx,
+  entry: Entry
+): Promise<PublicFile> => {
+  const metadata = entry.metadata as EntryMetadata | undefined;
+  const storageId = metadata?.storageId;
+
+  let fileSize = 'Unknown';
+
+  if (storageId) {
+    try {
+      const storageMetadata = await ctx.db.system.get(storageId);
+      if (storageMetadata) {
+        fileSize = formatFileSize(storageMetadata.size);
+      }
+    } catch (error) {
+      console.error('Error getting storage metadata', error);
+    }
+  }
+
+  const fileName = entry.key ?? 'Unknown';
+  const fileExtension = fileName.split('.').pop()?.toLowerCase() ?? 'txt';
+
+  let status: 'ready' | 'processing' | 'error' = 'error';
+
+  if (entry.status === 'ready') {
+    status = 'ready';
+  } else if (entry.status === 'pending') {
+    status = 'processing';
+  }
+
+  const url = storageId ? await ctx.storage.getUrl(storageId) : null;
+
+  return {
+    id: entry.entryId,
+    name: fileName,
+    type: fileExtension,
+    size: fileSize,
+    status,
+    url,
+    category: metadata?.category ?? 'Other'
+  };
+};

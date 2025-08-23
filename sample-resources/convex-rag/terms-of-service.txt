@@ -1,0 +1,234 @@
+Terms of Service - Example Platform
+
+Last Updated: January 1, 2024
+Effective Date: January 1, 2024
+
+=============================================
+AGREEMENT TO TERMS
+=============================================
+
+These Terms of Service ("Terms") govern your use of Example Platform ("Service") operated by Example Inc. ("Company", "we", "us", or "our").
+
+By accessing or using our Service, you agree to be bound by these Terms. If you disagree with any part of these terms, you may not access the Service.
+
+=============================================
+ACCOUNT TERMS
+=============================================
+
+1. Account Creation
+   - You must be 18 years or older to use this Service
+   - You must provide accurate and complete information
+   - You are responsible for maintaining account security
+   - One person or legal entity per account
+   - You must not share account credentials
+
+2. Account Responsibilities
+   - You are responsible for all activity under your account
+   - You must immediately notify us of unauthorized use
+   - You will not use the Service for illegal purposes
+   - You will not violate any laws in your jurisdiction
+
+3. Account Termination
+   - You may cancel your account at any time
+   - We reserve the right to suspend or terminate accounts
+   - Content may be deleted 30 days after termination
+   - Termination does not relieve payment obligations
+
+=============================================
+ACCEPTABLE USE POLICY
+=============================================
+
+You agree NOT to:
+- Violate any laws or regulations
+- Infringe on intellectual property rights
+- Transmit malware or harmful code
+- Attempt to gain unauthorized access
+- Harass, abuse, or harm others
+- Send spam or unsolicited messages
+- Misrepresent your identity or affiliation
+- Interfere with service operation
+- Exceed usage limits or quotas
+- Resell service without permission
+
+=============================================
+PAYMENT TERMS
+=============================================
+
+1. Billing
+   - Subscription fees are billed in advance
+   - All fees are in USD unless specified
+   - Prices are subject to change with 30 days notice
+   - Taxes may apply based on location
+
+2. Refunds
+   - 30-day money-back guarantee for new accounts
+   - No refunds for partial months of service
+   - Refunds processed to original payment method
+   - Allow 5-10 business days for processing
+
+3. Upgrades/Downgrades
+   - Upgrades take effect immediately
+   - Downgrades take effect at next billing cycle
+   - Prorated credits applied for plan changes
+   - Some features may be lost on downgrade
+
+4. Payment Failures
+   - Retry attempts will be made
+   - Service may be suspended for non-payment
+   - Account termination after 30 days non-payment
+   - Data may be deleted after termination
+
+=============================================
+SERVICE TERMS
+=============================================
+
+1. Service Availability
+   - We strive for 99.9% uptime
+   - Scheduled maintenance with advance notice
+   - No guarantee of uninterrupted service
+   - Service provided "as is"
+
+2. Service Modifications
+   - We may modify features at any time
+   - Major changes communicated in advance
+   - Discontinued features may not be restored
+   - API changes follow deprecation policy
+
+3. Data and Privacy
+   - You retain ownership of your content
+   - We may access data for support purposes
+   - Data handled per our Privacy Policy
+   - You grant us license to host your content
+
+4. Storage and Limits
+   - Storage limits based on plan
+   - Fair use policy applies
+   - Inactive data may be archived
+   - Excessive use may incur charges
+
+=============================================
+INTELLECTUAL PROPERTY
+=============================================
+
+1. Your Content
+   - You retain all rights to your content
+   - You grant us license to operate the service
+   - You warrant you have rights to upload content
+   - You're responsible for content legality
+
+2. Our Property
+   - Service and its contents are our property
+   - Trademarks and logos are protected
+   - You may not copy or distribute our software
+   - Feedback may be used without compensation
+
+=============================================
+LIMITATION OF LIABILITY
+=============================================
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW:
+- Service provided without warranties
+- We're not liable for indirect damages
+- Total liability limited to fees paid
+- You indemnify us from third-party claims
+- Force majeure events excuse performance
+
+=============================================
+DISPUTE RESOLUTION
+=============================================
+
+1. Informal Resolution
+   - Contact support first
+   - Good faith effort to resolve
+   - 60 days to attempt resolution
+
+2. Formal Proceedings
+   - Binding arbitration required
+   - Individual claims only (no class actions)
+   - Arbitration in San Francisco, CA
+   - Each party bears own costs
+
+3. Exceptions
+   - Small claims court allowed
+   - Injunctive relief for IP violations
+   - Claims not subject to arbitration
+
+=============================================
+GENERAL PROVISIONS
+=============================================
+
+1. Entire Agreement
+   - These Terms constitute entire agreement
+   - Supersede prior agreements
+   - Amendments must be in writing
+
+2. Governing Law
+   - Governed by California law
+   - Excluding conflict of law provisions
+   - UN Convention on Contracts excluded
+
+3. Severability
+   - Invalid provisions will be modified
+   - Remainder of Terms still apply
+   - Intent preserved where possible
+
+4. Assignment
+   - You may not assign these Terms
+   - We may assign in merger or sale
+   - Terms binding on successors
+
+5. Notices
+   - Email to registered address
+   - Legal notices to legal@example.com
+   - Changes posted to website
+
+=============================================
+SPECIFIC SERVICE TERMS
+=============================================
+
+1. API Usage
+   - Subject to rate limits
+   - Must not abuse or overload
+   - Commercial use requires permission
+   - Keys must be kept confidential
+
+2. Third-Party Integrations
+   - Subject to third-party terms
+   - We're not responsible for third parties
+   - Integration may be discontinued
+   - Data sharing at your risk
+
+3. Beta Features
+   - Provided as-is without warranty
+   - May be discontinued anytime
+   - Feedback may be used freely
+   - Not for production use
+
+=============================================
+CONTACT INFORMATION
+=============================================
+
+For questions about these Terms:
+
+Example Inc.
+Legal Department
+548 Market Street, Suite 500
+San Francisco, CA 94104
+
+Email: legal@example.com
+Phone: +1 (555) 123-4567
+
+For support: support@example.com
+For sales: sales@example.com
+
+=============================================
+CHANGES TO TERMS
+=============================================
+
+We reserve the right to modify these terms:
+- Changes effective upon posting
+- Material changes notified via email
+- Continued use constitutes acceptance
+- Review terms periodically
+
+By using Example Platform, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
