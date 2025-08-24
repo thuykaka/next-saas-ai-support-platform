@@ -55,7 +55,7 @@ export const MessageAvatar = ({
   ...props
 }: MessageAvatarProps) => (
   <Avatar
-    className={cn('ring-border size-8 ring ring-1', className)}
+    className={cn('ring-border size-8 ring-1', className)}
     {...props}
   >
     <AvatarImage alt='' className='mb-0 mt-0' src={src} />

@@ -48,3 +48,5 @@ Summary:
     - Server-side rendering
 
 https://stack.convex.dev/self-hosted-develop-and-deploy
+
+docker compose exec backend ./generate_admin_key.sh

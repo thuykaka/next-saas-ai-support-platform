@@ -6,7 +6,7 @@ import {
   guessMimeTypeFromExtension,
   vEntryId
 } from '@convex-dev/rag';
-import { paginationOptsValidator, PaginationResult } from 'convex/server';
+import { paginationOptsValidator } from 'convex/server';
 import { ConvexError, v } from 'convex/values';
 import { Id } from '../_generated/dataModel';
 import { action, query, QueryCtx } from '../_generated/server';
@@ -58,6 +58,8 @@ export const addFile = action({
       bytes,
       mimeType
     });
+
+    // TODO: check extractTextContent fails
 
     // Create an embedding for the file and add it to the RAG store
     const { entryId, created } = await rag.add(ctx, {
