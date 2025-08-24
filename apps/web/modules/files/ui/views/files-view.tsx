@@ -114,7 +114,7 @@ export const FilesView = () => {
                   <TableRow key={file.id} className='hover:bg-muted/50'>
                     <TableCell className='px-6 py-4'>
                       <div className='flex items-center gap-3'>
-                        <FileIcon />
+                        <FileIcon className='size-4' />
                         {file.name}
                       </div>
                     </TableCell>
@@ -135,7 +135,7 @@ export const FilesView = () => {
                             <MoreHorizontalIcon />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align='end'>
+                        <DropdownMenuContent align='start'>
                           <DropdownMenuItem
                             className='text-destructive cursor-pointer'
                             onClick={() => handleDeleteFile(file)}

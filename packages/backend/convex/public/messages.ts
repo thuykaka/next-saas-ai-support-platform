@@ -3,6 +3,7 @@ import { ConvexError, v } from 'convex/values';
 import { internal } from '../_generated/api';
 import { action, query } from '../_generated/server';
 import supportAgent from '../system/ai/agents/supportAgent';
+import { searchTool } from '../system/ai/search';
 import { escalateConversationTool } from '../system/ai/tools/escalateConversation';
 import { resolveConversationTool } from '../system/ai/tools/resolveConversation';
 
@@ -72,7 +73,8 @@ export const create = action({
           prompt: args.prompt,
           tools: {
             escalateConversationTool: escalateConversationTool,
-            resolveConversationTool: resolveConversationTool
+            resolveConversationTool: resolveConversationTool,
+            searchTool: searchTool
           }
         }
       );

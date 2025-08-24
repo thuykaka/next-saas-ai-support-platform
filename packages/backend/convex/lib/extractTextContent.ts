@@ -63,7 +63,7 @@ const extractTextFromPdf = async (
           {
             type: 'file',
             data: new URL(fileUrl),
-            mediaType: mimeType,
+            mimeType,
             filename: fileName
           },
           {

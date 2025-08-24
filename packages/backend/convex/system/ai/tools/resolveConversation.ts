@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v3';
 import { createTool } from '@convex-dev/agent';
 import { internal } from '../../../_generated/api';
 import supportAgent from '../agents/supportAgent';
@@ -6,7 +6,7 @@ import supportAgent from '../agents/supportAgent';
 export const resolveConversationTool = createTool({
   description: 'Resolve a conversation',
   args: z.object({}),
-  handler: async (ctx) => {
+  handler: async (ctx, args) => {
     const threadId = ctx.threadId;
 
     if (!threadId) {
