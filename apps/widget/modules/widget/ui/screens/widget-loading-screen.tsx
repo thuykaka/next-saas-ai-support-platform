@@ -88,7 +88,7 @@ export const WidgetLoadingScreen = ({ orgId }: WidgetLoadingScreenProps) => {
         console.log('contact session not valid');
         // if is not valid, go to settings to setup
         setSessionValid(false);
-        setStep('settings');
+        setStep('done');
       });
   }, [step, contactSessionId]);
 
