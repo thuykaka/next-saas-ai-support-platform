@@ -40,6 +40,7 @@ import {
   type Feature,
   PluginCard
 } from '@/modules/plugins/ui/components/plugin-card';
+import { VapiPluginConnected } from '@/modules/plugins/ui/components/vapi-plugin-connected';
 
 const features: Feature[] = [
   {
@@ -73,7 +74,7 @@ const formSchema = z.object({
   privateKey: z.string().min(1, 'Private API key is required')
 });
 
-const VapiForm = ({
+const VapiAddForm = ({
   open,
   setOpen
 }: {
@@ -169,6 +170,52 @@ const VapiForm = ({
   );
 };
 
+const VapiRemoveForm = ({
+  open,
+  setOpen
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
+  const removePlugin = useMutation(api.private.plugins.remove);
+
+  const onSubmit = async () => {
+    try {
+      await removePlugin({
+        service: 'vapi'
+      });
+
+      toast.success('VAPI plugin removed successfully');
+      setOpen(false);
+    } catch (error) {
+      console.error(`Failed to remove VAPI plugin: ${error}`);
+      toast.error('Failed to remove VAPI plugin');
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Disconnect VAPI</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to remove the VAPI plugin?
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant='outline'>Cancel</Button>
+          </DialogClose>
+          <Button onClick={onSubmit} variant='destructive'>
+            Disconnect
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 export const VapiPlugin = ({ preloaded }: VapiPluginProps) => {
   const plugin = usePreloadedQuery(preloaded);
 
@@ -186,12 +233,22 @@ export const VapiPlugin = ({ preloaded }: VapiPluginProps) => {
   return (
     <>
       {!!plugin ? (
-        <div>Connected</div>
+        <>
+          <VapiPluginConnected onDisconnect={handleSubmit} />
+          <VapiRemoveForm
+            open={removeDialogOpen}
+            setOpen={setRemoveDialogOpen}
+          />
+        </>
       ) : (
         <>
-          <VapiForm open={connectDialogOpen} setOpen={setConnectDialogOpen} />
+          <VapiAddForm
+            open={connectDialogOpen}
+            setOpen={setConnectDialogOpen}
+          />
+
           <PluginCard
-            isDisabled={plugin === undefined}
+            isDisabled={!!plugin}
             serviceName='VAPI'
             serviceImage='/vapi.jpg'
             features={features}

@@ -7,14 +7,17 @@ import {
   SecretsManagerClient
 } from '@aws-sdk/client-secrets-manager';
 
+let client: SecretsManagerClient | null = null;
+
 export const createSecretsManagerClient = (): SecretsManagerClient => {
-  return new SecretsManagerClient({
+  client ??= new SecretsManagerClient({
     region: process.env.AWS_REGION,
     credentials: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
     }
   });
+  return client;
 };
 
 export const getSecretValue = async (
