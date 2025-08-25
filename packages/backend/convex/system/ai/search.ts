@@ -43,11 +43,27 @@ export const searchTool = createTool({
       vectorScoreThreshold: 0.7
     });
 
-    const contextText = `Found results in ${searchResult.entries
+    const titles = (searchResult.entries ?? [])
       .map((entry) => entry.title)
-      .filter(Boolean)
-      .join(', ')}. Here is the context: \n\n${searchResult.text}`;
+      .filter(Boolean);
 
+    const kbText = (searchResult.text ?? '').trim();
+
+    // If nothing was found, obey the prompt contract without invoking the model.
+    if (titles.length === 0 || kbText.length === 0) {
+      const content =
+        "I couldn't find specific information about that in our knowledge base. Would you like me to connect you with a human support agent who can help?";
+      await supportAgent.saveMessage(ctx, {
+        threadId: ctx.threadId,
+        message: {
+          role: 'assistant',
+          content
+        }
+      });
+      return content;
+    }
+
+    const contextText = `Found results in ${titles.join(', ')}. Here is the context:\n\n${kbText}`;
     const response = await generateText({
       model: openai.chat('gpt-4o-mini'),
       messages: [
