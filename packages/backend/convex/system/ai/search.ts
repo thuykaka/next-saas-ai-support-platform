@@ -39,8 +39,7 @@ export const searchTool = createTool({
     const searchResult = await rag.search(ctx, {
       namespace: orgId,
       query: args.query,
-      limit: 5,
-      vectorScoreThreshold: 0.7
+      limit: 5
     });
 
     const titles = (searchResult.entries ?? [])
