@@ -172,7 +172,7 @@ const VapiAssistantTabContent = () => {
                 return (
                   <TableRow>
                     <TableCell colSpan={3} className='px-6 py-4 text-center'>
-                      No phone numbers found
+                      No assistants found
                     </TableCell>
                   </TableRow>
                 );
