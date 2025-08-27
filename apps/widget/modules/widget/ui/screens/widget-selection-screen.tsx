@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useMutation } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
 import { Button } from '@workspace/ui/components/button';
 import {
   ChevronRightIcon,
   Loader2Icon,
-  MessageSquareTextIcon
+  MessageSquareTextIcon,
+  MicIcon,
+  PhoneIcon
 } from 'lucide-react';
 import { useContactSessionId } from '@/modules/widget/store/use-contact-session-store';
 import { useConversationActions } from '@/modules/widget/store/use-conversation-store';
@@ -13,6 +15,8 @@ import {
   useScreenActions,
   useScreenOrgId
 } from '@/modules/widget/store/use-screen-store';
+import { useVapiSecrets } from '@/modules/widget/store/use-vapi-secrets-store';
+import { useWidgetSettings } from '@/modules/widget/store/use-widget-settings-store';
 import { WidgetFooter } from '@/modules/widget/ui/components/widget-footer';
 import { WidgetHeader } from '@/modules/widget/ui/components/widget-header';
 import { WIDGET_SCREENS } from '../../types';
@@ -22,6 +26,8 @@ export const WidgetSelectionScreen = () => {
   const orgId = useScreenOrgId();
   const contactSessionId = useContactSessionId();
   const { setConversationId } = useConversationActions();
+  const widgetSettings = useWidgetSettings();
+  const publicKey = useVapiSecrets();
 
   const [isPendingCreateConversation, setIsPendingCreateConversation] =
     useState(false);
@@ -58,6 +64,22 @@ export const WidgetSelectionScreen = () => {
     }
   };
 
+  const handleStartVoice = () => {
+    setScreen(WIDGET_SCREENS.VOICE);
+  };
+
+  const handleStartPhoneCall = () => {
+    setScreen(WIDGET_SCREENS.CONTACT);
+  };
+
+  const isShouldShowVoice = useMemo(() => {
+    return !!publicKey && !!widgetSettings?.vapiSettings?.assistantId;
+  }, [publicKey, widgetSettings]);
+
+  const isShouldShowPhoneCall = useMemo(() => {
+    return !!publicKey && !!widgetSettings?.vapiSettings?.phoneNumber;
+  }, [publicKey, widgetSettings]);
+
   return (
     <>
       <WidgetHeader>
@@ -67,6 +89,7 @@ export const WidgetSelectionScreen = () => {
         </div>
       </WidgetHeader>
       <div className='flex flex-1 flex-col gap-y-4 overflow-y-auto p-4'>
+        {/* Start chat */}
         <Button
           className='h-16 w-full justify-between'
           variant='outline'
@@ -89,6 +112,38 @@ export const WidgetSelectionScreen = () => {
             </>
           )}
         </Button>
+
+        {/* Start voice */}
+        {isShouldShowVoice && (
+          <Button
+            className='h-16 w-full justify-between'
+            variant='outline'
+            onClick={handleStartVoice}
+          >
+            <div className='flex items-center gap-x-2'>
+              <MicIcon className='size-4' />
+              <span>Start voice call</span>
+            </div>
+            <ChevronRightIcon className='size-4' />
+          </Button>
+        )}
+
+        {/* Start phone call */}
+        {isShouldShowPhoneCall && (
+          <Button
+            className='h-16 w-full justify-between'
+            variant='outline'
+            onClick={handleStartPhoneCall}
+            disabled={isPendingCreateConversation}
+          >
+            <div className='flex items-center gap-x-2'>
+              <PhoneIcon className='size-4' />
+              <span>Call us</span>
+            </div>
+
+            <ChevronRightIcon className='size-4' />
+          </Button>
+        )}
       </div>
       <WidgetFooter />
     </>

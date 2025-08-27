@@ -8,6 +8,7 @@ import { WidgetErrorScreen } from '@/modules/widget/ui/screens/widget-error-scre
 import { WidgetInboxScreen } from '@/modules/widget/ui/screens/widget-inbox-screen';
 import { WidgetLoadingScreen } from '@/modules/widget/ui/screens/widget-loading-screen';
 import { WidgetSelectionScreen } from '@/modules/widget/ui/screens/widget-selection-screen';
+import { WidgetVoiceScreen } from '@/modules/widget/ui/screens/widget-voice-screen';
 
 interface WidgetViewProps {
   orgId: string;
@@ -20,7 +21,7 @@ export const WidgetView = ({ orgId }: WidgetViewProps) => {
     [WIDGET_SCREENS.ERROR]: <WidgetErrorScreen />,
     [WIDGET_SCREENS.LOADING]: <WidgetLoadingScreen orgId={orgId} />,
     [WIDGET_SCREENS.SELECTION]: <WidgetSelectionScreen />,
-    [WIDGET_SCREENS.VOICE]: <div>Voice</div>,
+    [WIDGET_SCREENS.VOICE]: <WidgetVoiceScreen />,
     [WIDGET_SCREENS.AUTH]: <WidgetAuthScreen />,
     [WIDGET_SCREENS.INBOX]: <WidgetInboxScreen />,
     [WIDGET_SCREENS.CHAT]: <WidgetChatScreen />,
