@@ -65,5 +65,19 @@ export default defineSchema({
     secretName: v.string()
   })
     .index('by_org_id', ['orgId'])
-    .index('by_org_id_and_service', ['orgId', 'service'])
+    .index('by_org_id_and_service', ['orgId', 'service']),
+
+  widgetSettings: defineTable({
+    orgId: v.string(),
+    greetingMessage: v.string(),
+    defaultSuggestions: v.object({
+      suggestion1: v.optional(v.string()),
+      suggestion2: v.optional(v.string()),
+      suggestion3: v.optional(v.string())
+    }),
+    vapiSettings: v.object({
+      phoneNumber: v.optional(v.string()),
+      assistantId: v.optional(v.string())
+    })
+  }).index('by_org_id', ['orgId'])
 });
