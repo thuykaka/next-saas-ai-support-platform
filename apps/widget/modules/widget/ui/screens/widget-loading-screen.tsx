@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAction, useMutation } from 'convex/react';
+import { useAction, useMutation, useQuery } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
 import { Loader2Icon } from 'lucide-react';
 import { useContactSessionId } from '@/modules/widget/store/use-contact-session-store';
@@ -7,6 +7,7 @@ import {
   useScreenActions,
   useScreenLoadingMessage
 } from '@/modules/widget/store/use-screen-store';
+import { useWidgetSettingsActions } from '@/modules/widget/store/use-widget-settings-store';
 import { WIDGET_SCREENS } from '@/modules/widget/types';
 import { WidgetHeader } from '@/modules/widget/ui/components/widget-header';
 
@@ -20,6 +21,7 @@ export const WidgetLoadingScreen = ({ orgId }: WidgetLoadingScreenProps) => {
   const { setError, setScreen, setLoadingMessage, setOrgId } =
     useScreenActions();
   const loadingMessage = useScreenLoadingMessage();
+  const { setSettings } = useWidgetSettingsActions();
 
   const contactSessionId = useContactSessionId();
 
@@ -29,6 +31,14 @@ export const WidgetLoadingScreen = ({ orgId }: WidgetLoadingScreenProps) => {
   const validateOrg = useAction(api.public.organizations.validate);
   const validateContactSession = useMutation(
     api.public.contactSessions.validate
+  );
+  const widgetSettings = useQuery(
+    api.public.widgetSettings.getOne,
+    orgId
+      ? {
+          orgId
+        }
+      : 'skip'
   );
 
   // Step 1: Validate organization, set orgId
@@ -71,7 +81,7 @@ export const WidgetLoadingScreen = ({ orgId }: WidgetLoadingScreenProps) => {
     if (!contactSessionId) {
       console.log('no contact session id');
       setSessionValid(false);
-      setStep('done');
+      setStep('settings');
       return;
     }
 
@@ -82,22 +92,34 @@ export const WidgetLoadingScreen = ({ orgId }: WidgetLoadingScreenProps) => {
         console.log('contact session valid', valid);
         // if is valid, done
         setSessionValid(valid);
-        setStep('done');
+        setStep('settings');
       })
       .catch(() => {
         console.log('contact session not valid');
         // if is not valid, go to settings to setup
         setSessionValid(false);
-        setStep('done');
+        setStep('settings');
       });
   }, [step, contactSessionId]);
 
-  // Step 3
+  // Step 3: Get widget settings
+  useEffect(() => {
+    if (step !== 'settings') return;
+
+    setLoadingMessage('Loading settings...');
+
+    if (!!widgetSettings) {
+      setSettings(widgetSettings);
+    }
+
+    setStep('done');
+  }, [step, widgetSettings]);
+
+  // Step 4: Done
   useEffect(() => {
     if (step !== 'done') return;
 
     const hasValidSession = sessionValid && contactSessionId;
-    console.log('hasValidSession', sessionValid, contactSessionId);
     setScreen(hasValidSession ? WIDGET_SCREENS.SELECTION : WIDGET_SCREENS.AUTH);
   }, [step, sessionValid, contactSessionId]);
 
