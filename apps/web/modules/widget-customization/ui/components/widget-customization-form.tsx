@@ -31,7 +31,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon } from 'lucide-react';
 import { VapiFormFields } from '@/modules/widget-customization/ui/components/vapi-form-fields';
 import { widgetCustomizationFormSchema } from '@/modules/widget-customization/ui/schemas';
-import { type WidgetCustomizationFormSchema } from '@/modules/widget-customization/ui/types';
+import { WidgetCustomizationFormSchema } from '@/modules/widget-customization/ui/types';
 
 type WidgetCustomizationFormProps = {
   preloadedWidgetSettings: Preloaded<typeof api.private.widgetSettings.getOne>;

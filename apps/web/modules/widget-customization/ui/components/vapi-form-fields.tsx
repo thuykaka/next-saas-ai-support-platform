@@ -41,7 +41,7 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
             <FormLabel>Voice Assistant</FormLabel>
             <Select
               onValueChange={field.onChange}
-              defaultValue={field.value}
+              value={field.value}
               disabled={assistantsLoading || disabled}
             >
               <FormControl>
@@ -81,7 +81,7 @@ export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
             <FormLabel>Phone Number</FormLabel>
             <Select
               onValueChange={field.onChange}
-              defaultValue={field.value}
+              value={field.value}
               disabled={phoneNumbersLoading || disabled}
             >
               <FormControl>

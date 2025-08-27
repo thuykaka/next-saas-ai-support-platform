@@ -21,7 +21,7 @@ export const WidgetCustomizationView = async () => {
   );
 
   return (
-    <>
+    <div className='flex h-[calc(100vh-56px)] flex-col overflow-y-auto'>
       <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
         <div className='px-4'>
           <h2 className='text-xl font-bold tracking-tight'>
@@ -33,12 +33,12 @@ export const WidgetCustomizationView = async () => {
         </div>
       </div>
 
-      <div className='mt-8 flex h-full w-full max-w-screen-md flex-1 flex-col px-4'>
+      <div className='my-8 flex w-full max-w-screen-md flex-1 flex-col px-4'>
         <WidgetCustomizationForm
           preloadedWidgetSettings={preloadedWidgetSettings}
           preloadedVapiPlugin={preloadedVapiPlugin}
         />
       </div>
-    </>
+    </div>
   );
 };
