@@ -154,42 +154,35 @@ export const WidgetChatScreen = () => {
         </Button>
       </WidgetHeader>
 
-      <div className='h-full'>
-        <Conversation
-          className={cn(
-            'h-[calc(100vh-68px-64px-44px-22px)]',
-            shouldShowSuggestions && 'h-[calc(100vh-68px-64px-44px-22px-128px)]'
-          )}
-        >
-          <ConversationContent>
-            <InfiniteScrollTrigger
-              canLoadMore={canLoadMore}
-              isLoadingMore={isLoadingMore}
-              onLoadMore={handleLoadMore}
-              ref={topEleRef}
-            />
+      <Conversation className='h-full'>
+        <ConversationContent>
+          <InfiniteScrollTrigger
+            canLoadMore={canLoadMore}
+            isLoadingMore={isLoadingMore}
+            onLoadMore={handleLoadMore}
+            ref={topEleRef}
+          />
 
-            {toUIMessages(messages.results ?? [])?.map((message: any) => (
-              <Message
-                key={message.id}
-                from={message.role === 'user' ? 'user' : 'assistant'}
-              >
-                <MessageContent>
-                  <Response>{message.content}</Response>
-                </MessageContent>
-                {message.role === 'assistant' && (
-                  <DicebearAvatar
-                    seed='assistant'
-                    size={32}
-                    imageUrl='/logo.svg'
-                  />
-                )}
-              </Message>
-            ))}
-          </ConversationContent>
-          <ConversationScrollButton />
-        </Conversation>
-      </div>
+          {toUIMessages(messages.results ?? [])?.map((message: any) => (
+            <Message
+              key={message.id}
+              from={message.role === 'user' ? 'user' : 'assistant'}
+            >
+              <MessageContent>
+                <Response>{message.content}</Response>
+              </MessageContent>
+              {message.role === 'assistant' && (
+                <DicebearAvatar
+                  seed='assistant'
+                  size={32}
+                  imageUrl='/logo.svg'
+                />
+              )}
+            </Message>
+          ))}
+        </ConversationContent>
+        <ConversationScrollButton />
+      </Conversation>
 
       {shouldShowSuggestions && (
         <Suggestions className='flex w-full flex-col items-end p-2'>

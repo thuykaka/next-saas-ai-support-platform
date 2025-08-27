@@ -198,3 +198,43 @@
   scrollbar-width: none;
   /* Firefox */
 }
+
+@layer utilities {
+  @keyframes phone-ring-ripple {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.6;
+    }
+
+    70% {
+      transform: scale(1.6);
+      opacity: 0.1;
+    }
+
+    100% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  .animate-phone-ring-ripple {
+    animation: phone-ring-ripple 1.5s ease-out infinite;
+  }
+
+  @keyframes phone-vibrate {
+    0%, 100% { transform: rotate(0deg) translateX(0); }
+    10%  { transform: rotate(2deg) translateX(1px); }
+    20%  { transform: rotate(-2deg) translateX(-1px); }
+    30%  { transform: rotate(2deg) translateX(1px); }
+    40%  { transform: rotate(-2deg) translateX(-1px); }
+    50%  { transform: rotate(1deg) translateX(0.5px); }
+    60%  { transform: rotate(-1deg) translateX(-0.5px); }
+    70%  { transform: rotate(1deg) translateX(0.5px); }
+    80%  { transform: rotate(-1deg) translateX(-0.5px); }
+    90%  { transform: rotate(0.5deg) translateX(0.25px); }
+  }
+  
+  .animate-phone-vibrate {
+    animation: phone-vibrate .8s linear infinite;
+  }
+}

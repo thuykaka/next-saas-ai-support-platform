@@ -24,7 +24,9 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontMono.variable} overflow-hidden overscroll-none font-sans antialiased`}
       >
         <Toaster richColors />
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className='h-screen w-screen'>{children}</div>
+        </Providers>
       </body>
     </html>
   );

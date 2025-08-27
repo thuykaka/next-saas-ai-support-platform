@@ -1,9 +1,3 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { useThreadMessages, toUIMessages } from '@convex-dev/agent/react';
-import { useAction, useQuery } from 'convex/react';
-import { api } from '@workspace/backend/_generated/api';
 import {
   Conversation,
   ConversationContent,
@@ -13,42 +7,12 @@ import {
   Message,
   MessageContent
 } from '@workspace/ui/components/ai-elements/message';
-import {
-  PromptInput,
-  PromptInputButton,
-  PromptInputSubmit,
-  PromptInputTextarea,
-  PromptInputToolbar
-} from '@workspace/ui/components/ai-elements/prompt-input';
 import { Response } from '@workspace/ui/components/ai-elements/response';
-import {
-  Suggestion,
-  Suggestions
-} from '@workspace/ui/components/ai-elements/suggestion';
 import { Button } from '@workspace/ui/components/button';
-import { DicebearAvatar } from '@workspace/ui/components/dicebear-avatar';
-import { Form, FormField } from '@workspace/ui/components/form';
-import { InfiniteScrollTrigger } from '@workspace/ui/components/infinite-scroll-trigger';
-import { Skeleton } from '@workspace/ui/components/skeleton';
-import { useInfiniteScroll } from '@workspace/ui/hooks/use-infinite-scroll';
 import { cn } from '@workspace/ui/lib/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  ArrowLeftIcon,
-  Loader2Icon,
-  MenuIcon,
-  MicIcon,
-  MicOffIcon,
-  MoreHorizontalIcon,
-  PhoneIcon,
-  Wand2Icon
-} from 'lucide-react';
+import { ArrowLeftIcon, Loader2Icon, MicIcon, MicOffIcon } from 'lucide-react';
 import { useVapi } from '@/modules/widget/hooks/use-vapi';
-import { useContactSessionId } from '@/modules/widget/store/use-contact-session-store';
-import {
-  useConversationActions,
-  useConversationId
-} from '@/modules/widget/store/use-conversation-store';
+import { useConversationActions } from '@/modules/widget/store/use-conversation-store';
 import { useScreenActions } from '@/modules/widget/store/use-screen-store';
 import { WidgetFooter } from '@/modules/widget/ui/components/widget-footer';
 import { WidgetHeader } from '@/modules/widget/ui/components/widget-header';
@@ -56,7 +20,6 @@ import { WIDGET_SCREENS } from '../../types';
 
 export const WidgetVoiceScreen = () => {
   // states
-  const contactSessionId = useContactSessionId();
   const {
     isConnected,
     isSpeaking,
@@ -87,7 +50,7 @@ export const WidgetVoiceScreen = () => {
       </WidgetHeader>
 
       {transcript.length > 0 && (
-        <Conversation className='h-full flex-1'>
+        <Conversation className='h-full'>
           <ConversationContent>
             {transcript.map((message, index) => (
               <Message key={index} from={message.role}>
