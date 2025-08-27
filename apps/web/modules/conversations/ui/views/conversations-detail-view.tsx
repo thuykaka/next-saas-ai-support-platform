@@ -268,7 +268,7 @@ export const ConversationsDetailView = ({
           </div>
         </div>
       </ResizablePanel>
-      <ResizableHandle />
+      <ResizableHandle className='hidden lg:block' />
       <ResizablePanel defaultSize={25} maxSize={25} minSize={20}>
         <ConversationsMetadata conversation={conversation} />
       </ResizablePanel>

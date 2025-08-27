@@ -107,7 +107,7 @@ export const WidgetContactScreen = () => {
         <div className='bg-background flex items-center justify-center rounded-full border p-3'>
           <PhoneIcon className='text-muted-foreground size-6' />
         </div>
-        <p className='text-muted-foreground'>Avaiable 24/7</p>
+        <p className='text-muted-foreground'>Available 24/7</p>
         <div className='flex items-center gap-x-2'>
           <p className='text-2xl font-bold'>{phoneNumber}</p>
           <Button
