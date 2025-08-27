@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { useThreadMessages, toUIMessages } from '@convex-dev/agent/react';
@@ -21,6 +21,10 @@ import {
   PromptInputToolbar
 } from '@workspace/ui/components/ai-elements/prompt-input';
 import { Response } from '@workspace/ui/components/ai-elements/response';
+import {
+  Suggestion,
+  Suggestions
+} from '@workspace/ui/components/ai-elements/suggestion';
 import { Button } from '@workspace/ui/components/button';
 import { DicebearAvatar } from '@workspace/ui/components/dicebear-avatar';
 import { Form, FormField } from '@workspace/ui/components/form';
@@ -41,6 +45,7 @@ import {
   useConversationId
 } from '@/modules/widget/store/use-conversation-store';
 import { useScreenActions } from '@/modules/widget/store/use-screen-store';
+import { useWidgetSettings } from '@/modules/widget/store/use-widget-settings-store';
 import { WidgetHeader } from '@/modules/widget/ui/components/widget-header';
 import { WIDGET_SCREENS } from '../../types';
 
@@ -53,6 +58,7 @@ export const WidgetChatScreen = () => {
   const contactSessionId = useContactSessionId();
   const { setScreen } = useScreenActions();
   const { setConversationId } = useConversationActions();
+  const widgetSettings = useWidgetSettings();
 
   const [isPendingCreateMessage, setIsPendingCreateMessage] = useState(false);
 
@@ -125,6 +131,15 @@ export const WidgetChatScreen = () => {
     setScreen(WIDGET_SCREENS.SELECTION);
   };
 
+  const suggestedMessages = useMemo(() => {
+    if (!widgetSettings) return [];
+    return Object.values(widgetSettings.defaultSuggestions);
+  }, [widgetSettings]);
+
+  const shouldShowSuggestions = useMemo(() => {
+    return toUIMessages(messages.results ?? []).length === 1;
+  }, [messages.results]);
+
   return (
     <div className='flex h-full flex-col'>
       <WidgetHeader className='flex items-center justify-between'>
@@ -140,14 +155,19 @@ export const WidgetChatScreen = () => {
       </WidgetHeader>
 
       <div className='h-full'>
-        <Conversation className='h-[calc(100vh-68px-64px-44px-22px)]'>
+        <Conversation
+          className={cn(
+            'h-[calc(100vh-68px-64px-44px-22px)]',
+            shouldShowSuggestions && 'h-[calc(100vh-68px-64px-44px-22px-128px)]'
+          )}
+        >
           <ConversationContent>
             <InfiniteScrollTrigger
-                canLoadMore={canLoadMore}
-                isLoadingMore={isLoadingMore}
-                onLoadMore={handleLoadMore}
-                ref={topEleRef}
-              />
+              canLoadMore={canLoadMore}
+              isLoadingMore={isLoadingMore}
+              onLoadMore={handleLoadMore}
+              ref={topEleRef}
+            />
 
             {toUIMessages(messages.results ?? [])?.map((message: any) => (
               <Message
@@ -170,6 +190,25 @@ export const WidgetChatScreen = () => {
           <ConversationScrollButton />
         </Conversation>
       </div>
+
+      {shouldShowSuggestions && (
+        <Suggestions className='flex w-full flex-col items-end p-2'>
+          {suggestedMessages.map((suggestion) => (
+            <Suggestion
+              key={suggestion}
+              onClick={() => {
+                form.setValue('message', suggestion, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                  shouldTouch: true
+                });
+                form.handleSubmit(onSubmit)();
+              }}
+              suggestion={suggestion}
+            />
+          ))}
+        </Suggestions>
+      )}
 
       {/* FORM */}
       <div className='p-2'>

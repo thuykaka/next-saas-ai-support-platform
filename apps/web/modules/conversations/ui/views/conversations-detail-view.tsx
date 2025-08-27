@@ -178,7 +178,7 @@ export const ConversationsDetailView = ({
             )}
           </header>
 
-          <Conversation className='max-h-[calc(100vh-159px-64px-44px-22px)] flex-1'>
+          <Conversation className='max-h-[calc(100vh-159px-64px-44px-30px)] flex-1'>
             <ConversationContent>
               <InfiniteScrollTrigger
                 canLoadMore={canLoadMore}
