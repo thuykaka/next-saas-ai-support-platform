@@ -133,8 +133,8 @@ export const enhanceResponse = action({
 
     if (!subscription || subscription.status !== 'active') {
       throw new ConvexError({
-        code: 'BAD_REQUEST',
-        message: 'Enhance response is only available for premium subscriptions'
+        code: 'FORBIDDEN',
+        message: 'Premium subscription required'
       });
     }
 

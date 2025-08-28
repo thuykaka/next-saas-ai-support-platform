@@ -1,19 +1,6 @@
-import { preloadQuery } from 'convex/nextjs';
-import { api } from '@workspace/backend/_generated/api';
-import { getAuthToken } from '@/lib/auth';
 import { VapiPlugin } from '@/modules/plugins/ui/components/vapi-plugin';
 
-export const VapiView = async () => {
-  const token = await getAuthToken();
-
-  const preloaded = await preloadQuery(
-    api.private.plugins.getOne,
-    {
-      service: 'vapi'
-    },
-    { token }
-  );
-
+export const VapiView = () => {
   return (
     <>
       <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
@@ -26,7 +13,7 @@ export const VapiView = async () => {
       </div>
 
       <div className='mt-8 flex h-full w-full max-w-screen-md flex-1 flex-col px-4'>
-        <VapiPlugin preloaded={preloaded} />
+        <VapiPlugin />
       </div>
     </>
   );
