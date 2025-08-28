@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useMutation, useQuery } from 'convex/react';
@@ -34,40 +34,67 @@ import { WidgetCustomizationFormSchema } from '@/modules/widget-customization/ui
 
 type WidgetSettings = Doc<'widgetSettings'>;
 
-export const WidgetCustomizationForm = () => {
+export const WidgetCustomization = () => {
   const widgetSettings = useQuery(api.private.widgetSettings.getOne);
   const vapiPlugin = useQuery(api.private.plugins.getOne, {
     service: 'vapi'
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const isLoadingData =
+    widgetSettings === undefined || vapiPlugin === undefined;
+
+  if (isLoadingData) {
+    return (
+      <div className='flex flex-col items-center justify-center gap-y-2 p-8'>
+        <Loader2Icon className='text-muted-foreground size-4 animate-spin' />
+        <p className='text-muted-foreground text-sm'>
+          Loading widget settings...
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <WidgetCustomizationForm
+      initialValues={widgetSettings}
+      hasVapiPlugin={!!vapiPlugin}
+    />
+  );
+};
+
+export const WidgetCustomizationForm = ({
+  initialValues,
+  hasVapiPlugin
+}: {
+  initialValues: WidgetSettings | null;
+  hasVapiPlugin: boolean;
+}) => {
   const upsertSettings = useMutation(api.private.widgetSettings.upsert);
 
   const form = useForm<WidgetCustomizationFormSchema>({
     resolver: zodResolver(widgetCustomizationFormSchema),
     defaultValues: {
       greetingMessage:
-        widgetSettings?.greetingMessage || 'Hi, how can I help you?',
+        initialValues?.greetingMessage || 'Hi, how can I help you?',
       defaultSuggestions: {
         suggestion1:
-          widgetSettings?.defaultSuggestions?.suggestion1 ||
+          initialValues?.defaultSuggestions?.suggestion1 ||
           'I need help with my account',
         suggestion2:
-          widgetSettings?.defaultSuggestions?.suggestion2 ||
+          initialValues?.defaultSuggestions?.suggestion2 ||
           'I have a question about my order',
         suggestion3:
-          widgetSettings?.defaultSuggestions?.suggestion3 ||
+          initialValues?.defaultSuggestions?.suggestion3 ||
           'I want to return my product'
       },
       vapiSettings: {
-        phoneNumber: widgetSettings?.vapiSettings?.phoneNumber || '',
-        assistantId: widgetSettings?.vapiSettings?.assistantId || ''
+        phoneNumber: initialValues?.vapiSettings?.phoneNumber || '',
+        assistantId: initialValues?.vapiSettings?.assistantId || ''
       }
     }
   });
 
   const onSubmit = async (data: WidgetCustomizationFormSchema) => {
-    setIsSubmitting(true);
     try {
       const vapiSettings: WidgetSettings['vapiSettings'] = {
         assistantId:
@@ -90,160 +117,139 @@ export const WidgetCustomizationForm = () => {
     } catch (error) {
       console.error('Failed to update widget settings', error);
       toast.error('Failed to update widget settings');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
-  const isLoadingData =
-    widgetSettings === undefined || vapiPlugin === undefined;
-
   return (
-    <>
-      {isLoadingData ? (
-        <div className='flex flex-col items-center justify-center gap-y-2 p-8'>
-          <Loader2Icon className='text-muted-foreground size-4 animate-spin' />
-          <p className='text-muted-foreground text-sm'>
-            Loading widget settings...
-          </p>
-        </div>
-      ) : (
-        <div className='flex flex-col'>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Greeting Chat Settings</CardTitle>
-                  <CardDescription>
-                    Configure basic chat widget behavior and messages
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className='space-y-4'>
-                  <FormField
-                    control={form.control}
-                    name='greetingMessage'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Greeting Message</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            {...field}
-                            placeholder='Welcome message show when chat open'
-                            rows={3}
-                          />
-                        </FormControl>
-                        <FormDescription className='text-muted-foreground text-xs'>
-                          This message will be shown when the chat widget is
-                          opened.
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+    <div className='flex flex-col'>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+          <Card>
+            <CardHeader>
+              <CardTitle>Greeting Chat Settings</CardTitle>
+              <CardDescription>
+                Configure basic chat widget behavior and messages
+              </CardDescription>
+            </CardHeader>
+            <CardContent className='space-y-4'>
+              <FormField
+                control={form.control}
+                name='greetingMessage'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Greeting Message</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder='Welcome message show when chat open'
+                        rows={3}
+                      />
+                    </FormControl>
+                    <FormDescription className='text-muted-foreground text-xs'>
+                      This message will be shown when the chat widget is opened.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                  <Separator />
+              <Separator />
 
-                  <div className='space-y-4'>
-                    <div className='flex flex-col gap-y-1'>
-                      <h3 className='font-semibold'>Default Suggestions</h3>
-                      <p className='text-muted-foreground text-sm'>
-                        Quick suggestions to help customers get started with
-                        their queries
-                      </p>
-                    </div>
-                    <FormField
-                      control={form.control}
-                      name='defaultSuggestions.suggestion1'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Suggestion 1</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder='e.g., "I need help with my account"'
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name='defaultSuggestions.suggestion2'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Suggestion 2</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder='e.g., "What is your return policy?"'
-                            />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name='defaultSuggestions.suggestion3'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Suggestion 3</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder='e.g., "How can I track my order?"'
-                            />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              {vapiPlugin && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>VAPI Settings</CardTitle>
-                    <CardDescription>
-                      Configure VAPI settings for your chat widget
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className='space-y-4'>
-                    <VapiFormFields form={form} />
-                  </CardContent>
-                </Card>
-              )}
-
-              <div className='flex justify-end'>
-                <Button
-                  type='submit'
-                  disabled={
-                    form.formState.isSubmitting ||
-                    isLoadingData ||
-                    !form.formState.isValid
-                  }
-                >
-                  {form.formState.isSubmitting ? (
-                    <>
-                      <Loader2Icon className='size-4 animate-spin' />
-                      Saving...
-                    </>
-                  ) : (
-                    'Save Settings'
+              <div className='space-y-4'>
+                <div className='flex flex-col gap-y-1'>
+                  <h3 className='font-semibold'>Default Suggestions</h3>
+                  <p className='text-muted-foreground text-sm'>
+                    Quick suggestions to help customers get started with their
+                    queries
+                  </p>
+                </div>
+                <FormField
+                  control={form.control}
+                  name='defaultSuggestions.suggestion1'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Suggestion 1</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder='e.g., "I need help with my account"'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
-                </Button>
+                />
+
+                <FormField
+                  control={form.control}
+                  name='defaultSuggestions.suggestion2'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Suggestion 2</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder='e.g., "What is your return policy?"'
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name='defaultSuggestions.suggestion3'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Suggestion 3</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder='e.g., "How can I track my order?"'
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
-            </form>
-          </Form>
-        </div>
-      )}
-    </>
+            </CardContent>
+          </Card>
+
+          {hasVapiPlugin && (
+            <Card>
+              <CardHeader>
+                <CardTitle>VAPI Settings</CardTitle>
+                <CardDescription>
+                  Configure VAPI settings for your chat widget
+                </CardDescription>
+              </CardHeader>
+              <CardContent className='space-y-4'>
+                <VapiFormFields form={form} />
+              </CardContent>
+            </Card>
+          )}
+
+          <div className='flex justify-end'>
+            <Button
+              type='submit'
+              disabled={form.formState.isSubmitting || !form.formState.isValid}
+            >
+              {form.formState.isSubmitting ? (
+                <>
+                  <Loader2Icon className='size-4 animate-spin' />
+                  Saving...
+                </>
+              ) : (
+                'Save Settings'
+              )}
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 };

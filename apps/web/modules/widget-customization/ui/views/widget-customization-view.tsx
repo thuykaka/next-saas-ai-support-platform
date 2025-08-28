@@ -1,4 +1,4 @@
-import { WidgetCustomizationForm } from '@/modules/widget-customization/ui/components/widget-customization-form';
+import { WidgetCustomization } from '@/modules/widget-customization/ui/components/widget-customization-form';
 
 export const WidgetCustomizationView = () => {
   return (
@@ -15,7 +15,7 @@ export const WidgetCustomizationView = () => {
       </div>
 
       <div className='my-8 flex w-full max-w-screen-md flex-1 flex-col px-4'>
-        <WidgetCustomizationForm />
+        <WidgetCustomization />
       </div>
     </div>
   );
