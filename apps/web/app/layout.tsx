@@ -27,7 +27,13 @@ export default function RootLayout({
       >
         <NextTopLoader showSpinner={false} color='var(--primary)' />
         <Toaster richColors />
-        <ClerkProvider>
+        <ClerkProvider
+          appearance={{
+            variables: {
+              colorPrimary: 'var(--primary)'
+            }
+          }}
+        >
           <Providers>{children}</Providers>
         </ClerkProvider>
       </body>

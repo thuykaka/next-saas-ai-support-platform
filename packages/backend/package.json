@@ -25,6 +25,7 @@
         "convex": "^1.25.4",
         "convex-helpers": "^0.1.100",
         "openai": "latest",
+        "svix": "^1.75.0",
         "zod": "^3.25.67"
     },
     "devDependencies": {
