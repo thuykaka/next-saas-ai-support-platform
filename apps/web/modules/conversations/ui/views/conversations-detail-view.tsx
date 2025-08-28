@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useThreadMessages, toUIMessages } from '@convex-dev/agent/react';
 import { useAction, useMutation, useQuery } from 'convex/react';
+import { ConvexError } from 'convex/values';
 import { api } from '@workspace/backend/_generated/api';
 import { Id } from '@workspace/backend/_generated/dataModel';
 import {
@@ -149,9 +150,12 @@ export const ConversationsDetailView = ({
         prompt: form.getValues('message')
       });
       form.setValue('message', response);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      toast.error('Failed to enhance response');
+      toast.error('Failed to enhance response', {
+        description:
+          err instanceof ConvexError ? err.data?.message : 'Unknown error'
+      });
     } finally {
       setIsPendingEnhanceResponse(false);
     }

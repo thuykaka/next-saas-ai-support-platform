@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { Preloaded, useMutation, usePreloadedQuery } from 'convex/react';
