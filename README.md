@@ -103,7 +103,7 @@ Convex-based backend providing real-time database and API functionality.
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/thuykaka/next-saas-ai-support-platform
    cd next-saas-ai-support-platform
    ```
 
@@ -120,40 +120,41 @@ Convex-based backend providing real-time database and API functionality.
    **Backend (`packages/backend/.env.local`):**
 
    ```env
-   # Clerk Configuration
-   CLERK_SECRET_KEY=your_clerk_secret_key
-   CLERK_JWT_ISSUER_DOMAIN=your_clerk_domain
+   # Convex Clould
+   CONVEX_DEPLOYMENT=your_convex_deployment # get from dashboard -> settings e.g., dev:adamant-octopus-770
+   CONVEX_URL=your_convex_url # get from dashboard -> settings
 
-   # OpenAI Configuration
+   # Clerk
+   CLERK_JWT_ISSUER_DOMAIN=your_clerk_domain
+   CLERK_SECRET_KEY=your_clerk_secret_key
+   CLERK_WEBHOOK_SECRET=your_clerk_webhook_secret
+
+   # OpenAI
    OPENAI_API_KEY=your_openai_api_key
 
-   # Vapi AI Configuration
-   VAPI_API_KEY=your_vapi_api_key
-
-   # AWS Configuration (for secrets management)
+   # AWS
+   AWS_ACCESS_KEY_ID=your_aws_secret_key
+   AWS_SECRET_ACCESS_KEY=your_aws_access_key
    AWS_REGION=your_aws_region
-   AWS_ACCESS_KEY_ID=your_aws_access_key
-   AWS_SECRET_ACCESS_KEY=your_aws_secret_key
    ```
 
    **Web CMS (`apps/web/.env.local`):**
 
    ```env
    # Clerk Configuration
+   NEXT_PUBLIC_CLERK_FRONTEND_API_URL=your_clerk_api_url
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
    CLERK_SECRET_KEY=your_clerk_secret_key
-   NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-   NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-   NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-   NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+   NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
+   NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
+   NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL="/"
+   NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL="/"
 
    # Convex Configuration
    NEXT_PUBLIC_CONVEX_URL=your_convex_url
 
    # Sentry Configuration
-   SENTRY_DSN=your_sentry_dsn
-   SENTRY_ORG=your_sentry_org
-   SENTRY_PROJECT=your_sentry_project
+   SENTRY_AUTH_TOKEN=your_sentry_auth_token
    ```
 
    **Widget (`apps/widget/.env.local`):**
