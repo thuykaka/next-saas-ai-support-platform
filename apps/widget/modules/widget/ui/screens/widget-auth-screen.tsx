@@ -85,7 +85,6 @@ export const WidgetAuthScreen = () => {
         metadata
       });
 
-      toast.success(`Contact session created: ${result.id}`);
       setContactSessionId(result.id);
 
       setScreen(WIDGET_SCREENS.SELECTION);
