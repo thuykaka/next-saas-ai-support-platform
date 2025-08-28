@@ -19,6 +19,7 @@
     "@workspace/backend": "workspace:*",
     "@workspace/math": "workspace:*",
     "@workspace/ui": "workspace:*",
+    "bowser": "^2.12.1",
     "convex": "^1.25.4",
     "countries-and-timezones": "^3.8.0",
     "date-fns": "^4.1.0",

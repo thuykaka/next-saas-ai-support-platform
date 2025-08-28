@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Vapi from '@vapi-ai/web';
-
+import { useVapiSecrets } from '@/modules/widget/store/use-vapi-secrets-store';
+import { useWidgetSettings } from '@/modules/widget/store/use-widget-settings-store';
 
 interface TranscriptMessage {
   role: 'user' | 'assistant';
@@ -8,6 +9,9 @@ interface TranscriptMessage {
 }
 
 export const useVapi = () => {
+  const vapiPublicKey = useVapiSecrets();
+  const widgetSettings = useWidgetSettings();
+
   const [vapi, setVapi] = useState<Vapi | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -15,7 +19,9 @@ export const useVapi = () => {
   const [transcript, setTranscript] = useState<TranscriptMessage[]>([]);
 
   useEffect(() => {
-    const vapiInstance = new Vapi(process.env.NEXT_PUBLIC_VAPI_KEY!);
+    if (!vapiPublicKey) return;
+
+    const vapiInstance = new Vapi(vapiPublicKey);
     setVapi(vapiInstance);
 
     vapiInstance.on('call-start', () => {
@@ -61,9 +67,10 @@ export const useVapi = () => {
   }, []);
 
   const startCall = async () => {
+    if (!vapi || !widgetSettings?.vapiSettings?.assistantId) return;
     setIsConnecting(true);
-    // hardcoded for now
-    await vapi?.start('9cc5a295-4e0f-43df-ba46-ce3dec168d4c');
+
+    await vapi?.start(widgetSettings.vapiSettings.assistantId);
   };
 
   const stopCall = () => {
