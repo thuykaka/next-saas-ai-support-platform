@@ -61,7 +61,20 @@ export const create = action({
       });
     }
 
-    const shouldTriggerAgent = conversation.status === 'unresolved';
+    // Keep the session alive when user send a message and they have time in threshold
+    await ctx.runMutation(internal.system.contactSessions.refresh, {
+      contactSessionId: args.contactSessionId
+    });
+
+    const subscription = await ctx.runQuery(
+      internal.system.subscriptions.getByOrgId,
+      {
+        orgId: contactSession.orgId
+      }
+    );
+
+    const shouldTriggerAgent =
+      conversation.status === 'unresolved' && subscription?.status === 'active';
 
     if (shouldTriggerAgent) {
       await supportAgent.generateText(

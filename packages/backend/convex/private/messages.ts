@@ -3,7 +3,7 @@ import { paginationOptsValidator } from 'convex/server';
 import { ConvexError, v } from 'convex/values';
 import { openai } from '@ai-sdk/openai';
 import { generateText } from 'ai';
-import { components } from '../_generated/api';
+import { components, internal } from '../_generated/api';
 import { action, mutation, query } from '../_generated/server';
 import supportAgent from '../system/ai/agents/supportAgent';
 import { OPERATOR_MESSAGE_ENHANCEMENT_PROMPT } from '../system/ai/constants';
@@ -121,6 +121,20 @@ export const enhanceResponse = action({
       throw new ConvexError({
         code: 'UNAUTHORIZED',
         message: 'Unauthorized'
+      });
+    }
+
+    const subscription = await ctx.runQuery(
+      internal.system.subscriptions.getByOrgId,
+      {
+        orgId: identity.orgId as string
+      }
+    );
+
+    if (!subscription || subscription.status !== 'active') {
+      throw new ConvexError({
+        code: 'BAD_REQUEST',
+        message: 'Enhance response is only available for premium subscriptions'
       });
     }
 

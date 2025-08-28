@@ -1,7 +1,6 @@
 import { v } from 'convex/values';
-import { query, mutation } from '../_generated/server';
-
-const SESSION_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 1; // 1 days
+import { mutation } from '../_generated/server';
+import { SESSION_DURATION_TIME_MS } from '../constants';
 
 export const create = mutation({
   args: {
@@ -39,7 +38,7 @@ export const create = mutation({
   handler: async (ctx, args) => {
     const id = await ctx.db.insert('contactSessions', {
       ...args,
-      expiresAt: Date.now() + SESSION_EXPIRATION_TIME
+      expiresAt: Date.now() + SESSION_DURATION_TIME_MS
     });
 
     return { id };
