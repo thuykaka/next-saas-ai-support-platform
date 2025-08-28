@@ -1,25 +1,6 @@
-import { preloadQuery } from 'convex/nextjs';
-import { api } from '@workspace/backend/_generated/api';
-import { getAuthToken } from '@/lib/auth';
 import { WidgetCustomizationForm } from '@/modules/widget-customization/ui/components/widget-customization-form';
 
-export const WidgetCustomizationView = async () => {
-  const token = await getAuthToken();
-
-  const preloadedWidgetSettings = await preloadQuery(
-    api.private.widgetSettings.getOne,
-    {},
-    { token }
-  );
-
-  const preloadedVapiPlugin = await preloadQuery(
-    api.private.plugins.getOne,
-    {
-      service: 'vapi'
-    },
-    { token }
-  );
-
+export const WidgetCustomizationView = () => {
   return (
     <div className='flex h-[calc(100vh-56px)] flex-col overflow-y-auto'>
       <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
@@ -34,10 +15,7 @@ export const WidgetCustomizationView = async () => {
       </div>
 
       <div className='my-8 flex w-full max-w-screen-md flex-1 flex-col px-4'>
-        <WidgetCustomizationForm
-          preloadedWidgetSettings={preloadedWidgetSettings}
-          preloadedVapiPlugin={preloadedVapiPlugin}
-        />
+        <WidgetCustomizationForm />
       </div>
     </div>
   );

@@ -4,12 +4,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import {
-  Preloaded,
-  useMutation,
-  usePreloadedQuery,
-  useQuery
-} from 'convex/react';
+import { useMutation, useQuery } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
 import { Button } from '@workspace/ui/components/button';
 import {
@@ -32,6 +27,7 @@ import { InputPassword } from '@workspace/ui/components/input-password';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   GlobeIcon,
+  Loader2Icon,
   PhoneCallIcon,
   PhoneIcon,
   WorkflowIcon
@@ -64,10 +60,6 @@ const features: Feature[] = [
     icon: WorkflowIcon
   }
 ];
-
-interface VapiPluginProps {
-  preloaded: Preloaded<typeof api.private.plugins.getOne>;
-}
 
 const formSchema = z.object({
   publicKey: z.string().min(1, 'Public API key is required'),
@@ -216,8 +208,10 @@ const VapiRemoveForm = ({
   );
 };
 
-export const VapiPlugin = ({ preloaded }: VapiPluginProps) => {
-  const plugin = usePreloadedQuery(preloaded);
+export const VapiPlugin = () => {
+  const plugin = useQuery(api.private.plugins.getOne, {
+    service: 'vapi'
+  });
 
   const [connectDialogOpen, setConnectDialogOpen] = useState(false);
   const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
@@ -230,9 +224,18 @@ export const VapiPlugin = ({ preloaded }: VapiPluginProps) => {
     }
   };
 
+  const isLoading = plugin === undefined;
+
   return (
     <>
-      {!!plugin ? (
+      {isLoading ? (
+        <div className='flex flex-col items-center justify-center gap-y-2 p-8'>
+          <Loader2Icon className='text-muted-foreground size-4 animate-spin' />
+          <p className='text-muted-foreground text-sm'>
+            Loading VAPI plugin...
+          </p>
+        </div>
+      ) : !!plugin ? (
         <>
           <VapiPluginConnected onDisconnect={handleSubmit} />
           <VapiRemoveForm

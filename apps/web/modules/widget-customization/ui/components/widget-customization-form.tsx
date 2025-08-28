@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { Preloaded, useMutation, usePreloadedQuery } from 'convex/react';
+import { useMutation, useQuery } from 'convex/react';
 import { api } from '@workspace/backend/_generated/api';
 import { Doc } from '@workspace/backend/_generated/dataModel';
 import { Button } from '@workspace/ui/components/button';
@@ -32,19 +32,13 @@ import { VapiFormFields } from '@/modules/widget-customization/ui/components/vap
 import { widgetCustomizationFormSchema } from '@/modules/widget-customization/ui/schemas';
 import { WidgetCustomizationFormSchema } from '@/modules/widget-customization/ui/types';
 
-type WidgetCustomizationFormProps = {
-  preloadedWidgetSettings: Preloaded<typeof api.private.widgetSettings.getOne>;
-  preloadedVapiPlugin: Preloaded<typeof api.private.plugins.getOne>;
-};
-
 type WidgetSettings = Doc<'widgetSettings'>;
 
-export const WidgetCustomizationForm = ({
-  preloadedWidgetSettings,
-  preloadedVapiPlugin
-}: WidgetCustomizationFormProps) => {
-  const widgetSettings = usePreloadedQuery(preloadedWidgetSettings);
-  const vapiPlugin = usePreloadedQuery(preloadedVapiPlugin);
+export const WidgetCustomizationForm = () => {
+  const widgetSettings = useQuery(api.private.widgetSettings.getOne);
+  const vapiPlugin = useQuery(api.private.plugins.getOne, {
+    service: 'vapi'
+  });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const upsertSettings = useMutation(api.private.widgetSettings.upsert);
