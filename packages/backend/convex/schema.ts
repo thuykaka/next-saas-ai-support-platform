@@ -79,5 +79,10 @@ export default defineSchema({
       phoneNumber: v.optional(v.string()),
       assistantId: v.optional(v.string())
     })
+  }).index('by_org_id', ['orgId']),
+
+  subscriptionPlans: defineTable({
+    orgId: v.string(),
+    status: v.string()
   }).index('by_org_id', ['orgId'])
 });
