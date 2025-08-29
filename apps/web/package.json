@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.28.1",
+    "@clerk/themes": "^2.4.15",
     "@convex-dev/agent": "0.1.16",
     "@hookform/resolvers": "^5.2.1",
     "@sentry/nextjs": "10",
     "@workspace/backend": "workspace:*",
-    "@workspace/math": "workspace:*",
     "@workspace/ui": "workspace:*",
     "bowser": "^2.12.1",
     "convex": "^1.25.4",

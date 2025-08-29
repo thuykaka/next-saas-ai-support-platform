@@ -15,6 +15,8 @@ import {
 } from '@workspace/ui/components/sidebar';
 import { cn } from '@workspace/ui/lib/utils';
 import { OrganizationSwitcher, UserButton } from '@clerk/nextjs';
+import { dark } from '@clerk/themes';
+import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useMediaQuery } from '@/hooks/use-media-query';
@@ -22,9 +24,10 @@ import {
   accountNavItems,
   configurationNavItems,
   customerSupportNavItems
-} from '../constants/nav';
+} from '@/modules/dashboard/ui/constants/nav';
 
 export const AppSidebar = () => {
+  const { theme } = useTheme();
   const pathname = usePathname();
   const { isOpen } = useMediaQuery();
 
@@ -42,6 +45,7 @@ export const AppSidebar = () => {
                 hidePersonal={true}
                 skipInvitationScreen={true}
                 appearance={{
+                  theme: theme === 'dark' ? dark : undefined,
                   elements: {
                     rootBox: 'w-full! h-12!',
                     avatarBox: 'size-8! rounded-lg!',
@@ -144,6 +148,7 @@ export const AppSidebar = () => {
             <UserButton
               showName
               appearance={{
+                theme: theme === 'dark' ? dark : undefined,
                 elements: {
                   rootBox: 'w-full! h-12!',
                   userButtonTrigger:

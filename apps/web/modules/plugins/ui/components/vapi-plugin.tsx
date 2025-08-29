@@ -24,8 +24,10 @@ import {
   FormLabel
 } from '@workspace/ui/components/form';
 import { InputPassword } from '@workspace/ui/components/input-password';
+import { Skeleton } from '@workspace/ui/components/skeleton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
+  ArrowLeftRightIcon,
   GlobeIcon,
   Loader2Icon,
   PhoneCallIcon,
@@ -229,12 +231,7 @@ export const VapiPlugin = () => {
   return (
     <>
       {isLoading ? (
-        <div className='flex flex-col items-center justify-center gap-y-2 p-8'>
-          <Loader2Icon className='text-muted-foreground size-4 animate-spin' />
-          <p className='text-muted-foreground text-sm'>
-            Loading VAPI plugin...
-          </p>
-        </div>
+        <VapiPluginSkeleton />
       ) : !!plugin ? (
         <>
           <VapiPluginConnected onDisconnect={handleSubmit} />
@@ -260,5 +257,48 @@ export const VapiPlugin = () => {
         </>
       )}
     </>
+  );
+};
+
+export const VapiPluginSkeleton = () => {
+  return (
+    <div className='bg-muted h-fit w-full rounded-lg border p-8'>
+      <div className='mb-6 flex items-center justify-center gap-4'>
+        <div className='flex flex-col items-center'>
+          <Skeleton className='h-10 w-10 rounded-full' />
+        </div>
+
+        <div className='flex flex-col items-center gap-1'>
+          <Skeleton className='h-4 w-10' />
+        </div>
+
+        <div className='flex flex-col items-center'>
+          <Skeleton className='h-10 w-10 rounded-full' />
+        </div>
+      </div>
+
+      <div className='mb-6 text-center'>
+        <Skeleton className='h-4 w-full rounded-md' />
+      </div>
+
+      <div className='mb-6'>
+        <div className='space-y-4'>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={index} className='flex items-center gap-2'>
+              <div className='bg-background flex size-8 items-center justify-center rounded-lg border'>
+                <Skeleton className='h-4 w-4 rounded-full' />
+              </div>
+              <div className='flex flex-col'>
+                <Skeleton className='h-4 w-[200px]' />
+                <Skeleton className='h-4 w-[350px]' />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className='text-center'>
+        <Skeleton className='h-10 w-full rounded-md' />
+      </div>
+    </div>
   );
 };

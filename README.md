@@ -1,10 +1,10 @@
-# Echo AI Support Platform
+# Next SAAS AI Support Platform
 
-A comprehensive customer support platform built with AI-powered chat widgets, voice calling, and knowledge base management. Built as a Turbo monorepo with Next.js, Convex, and modern web technologies.
+A comprehensive customer support platform built with AI-powered chat widgets, voice calling, and knowledge base management. Built as a Turbo monorepo with Next.js 15, Convex, and modern web technologies.
 
 ## 🚀 Overview
 
-Echo AI Support Platform is a complete SaaS solution for customer support that includes:
+Next SAAS AI Support Platform is a complete SaaS solution for customer support that includes:
 
 - **AI-Powered Chat Widgets**: Intelligent customer support with RAG (Retrieval-Augmented Generation)
 - **Voice Calling**: Voice assistant integration with Vapi AI

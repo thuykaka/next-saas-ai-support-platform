@@ -1,6 +1,7 @@
 import { Protect } from '@clerk/nextjs';
 import { PremiumFeatureOverlay } from '@/modules/billing/ui/components/premium-feature-overlay';
 import { FilesView } from '@/modules/files/ui/views/files-view';
+import { FilesViewSkeleton } from '@/modules/files/ui/views/files-view-skeleton';
 
 export default function FilesPage() {
   return (
@@ -9,7 +10,7 @@ export default function FilesPage() {
       condition={(has) => has({ plan: 'pro' })}
       fallback={
         <PremiumFeatureOverlay>
-          <FilesView />
+          <FilesViewSkeleton />
         </PremiumFeatureOverlay>
       }
     >
