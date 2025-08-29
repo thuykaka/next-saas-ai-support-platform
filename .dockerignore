@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+dist
+.cursor
+.vscode
+sample-resources
+out
+docker
