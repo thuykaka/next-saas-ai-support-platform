@@ -39,3 +39,6 @@ npm-debug.log*
 .env.sentry-build-plugin
 
 .env.backup
+
+**/*.env
+

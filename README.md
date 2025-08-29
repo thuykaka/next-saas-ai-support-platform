@@ -2,6 +2,11 @@
 
 A comprehensive customer support platform built with AI-powered chat widgets, voice calling, and knowledge base management. Built as a Turbo monorepo with Next.js 15, Convex, and modern web technologies.
 
+## 🌐 Live Demos
+
+- **Web CMS Dashboard**: [next-saas-ai-support-platform-web.vercel.app](https://next-saas-ai-support-platform-web.vercel.app)
+- **Widget Interface**: [next-saas-ai-support-platform-widge.vercel.app](https://next-saas-ai-support-platform-widge.vercel.app)
+
 ## 🚀 Overview
 
 Next SAAS AI Support Platform is a complete SaaS solution for customer support that includes:
@@ -288,6 +293,40 @@ cd apps/widget && pnpm start
 - **AWS**: Full infrastructure deployment
 - **Docker**: Containerized deployment
 
+### Docker Deployment
+
+#### Prerequisites
+
+- Docker installed on your system
+- Docker Compose (optional, for multi-container setup)
+
+#### Build Docker Images
+
+```bash
+# Build both web and widget applications
+./docker-build.sh
+
+# Or build individually
+docker build -f apps/web/Dockerfile . -t saas-ai-support-platform-web
+docker build -f apps/widget/Dockerfile . -t saas-ai-support-platform-widget
+```
+
+#### Run with Docker Compose
+
+```bash
+# Navigate to docker/apps directory
+cd docker/apps
+
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
 ## 📚 Documentation
 
 - [Web CMS Documentation](./apps/web/README.md)
@@ -297,27 +336,53 @@ cd apps/widget && pnpm start
 
 ## 🖼️ Screenshots
 
-_[Screenshots will be added here]_
+### Web CMS Dashboard
 
-### Dashboard Overview
+#### Authentication
 
-_[Dashboard screenshot]_
+![Web CMS Authentication](./github/images/web-cms-auth.png)
+
+#### Conversations Management
+
+![Web CMS Conversations](./github/images/web-cms-conversations.png)
+
+#### Knowledge Base Management
+
+![Web CMS Knowledge Base](./github/images/web-cms-knowledge-base.png)
+
+#### Widget Customization
+
+![Web CMS Widget Customization](./github/images/web-cms-widget-customization.png)
+
+#### Platform Integrations
+
+![Web CMS Integrations](./github/images/web-cms-integration.png)
+
+#### Voice Assistant Configuration
+
+![Web CMS Voice Assistant](./github/images/web-cms-voice-assistant.png)
+
+#### Plans & Billing Management
+
+![Web CMS Plans & Billing](./github/images/web-cms-plan-and-billing.png)
 
 ### Widget Interface
 
-_[Widget screenshot]_
+#### Selection Screen
 
-### Embed Demo
+![Widget Selection](./github/images/widget-embed-1.png)
 
-_[Embed demo screenshot]_
+#### Voice Calling Interface
 
-### Knowledge Base
+![Widget Voice](./github/images/widget-embed-2.png)
 
-_[Knowledge base screenshot]_
+#### Authentication Interface
 
-### Voice Assistant
+![Widget Auth](./github/images/widget-embed-3.png)
 
-_[Voice assistant screenshot]_
+#### Chat Interface
+
+![Widget Chat](./github/images/widget-embed-4.png)
 
 ## 🤝 Contributing
 
@@ -327,9 +392,12 @@ _[Voice assistant screenshot]_
 4. Add tests if applicable
 5. Submit a pull request
 
-## 📄 License
+## 📚 References
 
-This project is licensed under the ISC License.
+### Video Tutorials
+
+- [Build and Deploy a B2B SaaS AI Support Platform | Next.js 15, React, Convex, Turborepo, Vapi, AWS Part 1](https://www.youtube.com/watch?v=CAr02YlEJUc)
+- [Build and Deploy a B2B SaaS AI Support Platform | Next.js 15, React, Convex, Turborepo, Vapi, AWS Part 2](https://www.youtube.com/watch?v=HUfZNPzI-rw&t=37230s)
 
 ## 🆘 Support
 
