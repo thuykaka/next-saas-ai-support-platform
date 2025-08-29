@@ -70,7 +70,10 @@ export const PremiumFeatureOverlay = ({
   const router = useRouter();
   return (
     <div className='relative min-h-screen'>
-      <div className='pointer-events-none select-none blur-[2px]'>
+      <div
+        className='pointer-events-none select-none blur-[2px]'
+        aria-hidden='true'
+      >
         {children}
       </div>
 
