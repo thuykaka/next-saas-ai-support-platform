@@ -1,0 +1,24 @@
+services:
+  web:
+    container_name: saas-ai-support-platform-web
+    image: saas-ai-support-platform-web
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./web.env
+    networks:
+      - saas-ai-support-platform-network
+      
+  widget:
+    container_name: saas-ai-support-platform-widget
+    image: saas-ai-support-platform-widget
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./widget.env
+    networks:
+      - saas-ai-support-platform-network
+
+networks:
+  saas-ai-support-platform-network:
+    driver: bridge

@@ -15,8 +15,8 @@ RUN pnpm add -g turbo@^2.4.2
 COPY . .
  
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
-# Prune the web workspace specifically
-RUN turbo prune web --docker
+# Prune the widget workspace specifically
+RUN turbo prune widget --docker
  
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -32,7 +32,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 COPY --from=builder /app/out/full/ .
 
 # Add output: 'standalone' to next.config.mjs for Docker build
-RUN sed -i "s/transpilePackages: \['@workspace\/ui'\]/transpilePackages: ['@workspace\/ui'],\n  output: 'standalone',/" apps/web/next.config.mjs
+RUN sed -i "s/transpilePackages: \['@workspace\/ui'\]/transpilePackages: ['@workspace\/ui'],\n  output: 'standalone',/" apps/widget/next.config.mjs
 
 RUN pnpm turbo run build
  
@@ -46,14 +46,14 @@ USER nextjs
  
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
-COPY --from=installer --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
+COPY --from=installer --chown=nextjs:nodejs /app/apps/widget/.next/standalone ./
+COPY --from=installer --chown=nextjs:nodejs /app/apps/widget/.next/static ./apps/widget/.next/static
+COPY --from=installer --chown=nextjs:nodejs /app/apps/widget/public ./apps/widget/public
+ 
+EXPOSE 3001
 
-EXPOSE 3000
-
-ENV PORT=3000
+ENV PORT=3001
 
 ENV HOSTNAME="0.0.0.0"
- 
-CMD ["node", "apps/web/server.js"]
+
+CMD ["node", "apps/widget/server.js"]
