@@ -23,9 +23,10 @@ export const INTEGRATIONS = [
 
 export type IntegrationId = (typeof INTEGRATIONS)[number]['id'];
 
-const WIDGET_URL = 'http://localhost:3001/echo-widget.js';
+const WIDGET_URL =
+  process.env.NEXT_PUBLIC_WIDGET_URL || 'http://localhost:3001/echo-widget.js';
 
-export const HTML_SNIPPET = `<script src='${WIDGET_URL}' data-org-id='__ORG_ID__'></script>`;
-export const REACT_SNIPPET = `<script src='${WIDGET_URL}' data-org-id='__ORG_ID__'></script>`;
-export const NEXTJS_SNIPPET = `<script src='${WIDGET_URL}' data-org-id='__ORG_ID__'></script>`;
-export const JAVASCRIPT_SNIPPET = `<script src='${WIDGET_URL}' data-org-id='__ORG_ID__'></script>`;
+export const HTML_SNIPPET = `<script src='${WIDGET_URL}' data-org-id='__ORG_ID__' defer></script>`;
+export const REACT_SNIPPET = `<script src='${WIDGET_URL}' data-org-id='__ORG_ID__' defer></script>`;
+export const NEXTJS_SNIPPET = `<script src='${WIDGET_URL}' data-org-id='__ORG_ID__' defer></script>`;
+export const JAVASCRIPT_SNIPPET = `<script src='${WIDGET_URL}' data-org-id='__ORG_ID__' defer></script>`;

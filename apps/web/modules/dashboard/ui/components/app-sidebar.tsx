@@ -27,7 +27,7 @@ import {
 } from '@/modules/dashboard/ui/constants/nav';
 
 export const AppSidebar = () => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const { isOpen } = useMediaQuery();
 
@@ -45,7 +45,7 @@ export const AppSidebar = () => {
                 hidePersonal={true}
                 skipInvitationScreen={true}
                 appearance={{
-                  theme: theme === 'dark' ? dark : undefined,
+                  theme: resolvedTheme === 'dark' ? dark : undefined,
                   elements: {
                     rootBox: 'w-full! h-12!',
                     avatarBox: 'size-8! rounded-lg!',
@@ -148,7 +148,7 @@ export const AppSidebar = () => {
             <UserButton
               showName
               appearance={{
-                theme: theme === 'dark' ? dark : undefined,
+                theme: resolvedTheme === 'dark' ? dark : undefined,
                 elements: {
                   rootBox: 'w-full! h-12!',
                   userButtonTrigger:

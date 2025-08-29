@@ -5,14 +5,14 @@ import { dark } from '@clerk/themes';
 import { useTheme } from 'next-themes';
 
 export const PricingTable = () => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <div className='flex flex-col items-center justify-center gap-y-4'>
       <ClerkPricingTable
         forOrganizations
         appearance={{
-          theme: theme === 'dark' ? dark : undefined,
+          theme: resolvedTheme === 'dark' ? dark : undefined,
           elements: {
             pricingTableCard: 'shadow-none! border! rounded-lg!',
             pricingTableCardHeader: 'bg-muted!',
