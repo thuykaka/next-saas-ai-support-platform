@@ -158,7 +158,7 @@ const IntegrationDialog = ({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className='min-w-[600px]'>
+      <DialogContent className='lg:min-w-[600px]'>
         <DialogHeader>
           <DialogTitle>Integration with your website</DialogTitle>
           <DialogDescription>
@@ -167,9 +167,7 @@ const IntegrationDialog = ({
         </DialogHeader>
         <div className='space-y-6'>
           <div className='space-y-2'>
-            <div className='bg-accent rounded-md p-2 text-sm'>
-              1. Copy the following code.
-            </div>
+            <div className='py-2 text-sm'>1. Copy the following code.</div>
             <div className='group relative'>
               <pre className='bg-foreground text-secondary max-h-[300px] overflow-auto whitespace-pre-wrap break-all rounded-md p-2 font-mono text-sm'>
                 {snippet}
@@ -191,7 +189,7 @@ const IntegrationDialog = ({
           </div>
 
           <div className='space-y-2'>
-            <div className='bg-accent rounded-md p-2 text-sm'>
+            <div className='py-2 text-sm'>
               2. Paste it into the <code>head</code> section of your website.
             </div>
             <p className='text-muted-foreground text-sm'>

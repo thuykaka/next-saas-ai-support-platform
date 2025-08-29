@@ -25,6 +25,7 @@ import {
 } from '@workspace/ui/components/form';
 import { Input } from '@workspace/ui/components/input';
 import { Separator } from '@workspace/ui/components/separator';
+import { Skeleton } from '@workspace/ui/components/skeleton';
 import { Textarea } from '@workspace/ui/components/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon } from 'lucide-react';
@@ -44,14 +45,7 @@ export const WidgetCustomization = () => {
     widgetSettings === undefined || vapiPlugin === undefined;
 
   if (isLoadingData) {
-    return (
-      <div className='flex flex-col items-center justify-center gap-y-2 p-8'>
-        <Loader2Icon className='text-muted-foreground size-4 animate-spin' />
-        <p className='text-muted-foreground text-sm'>
-          Loading widget settings...
-        </p>
-      </div>
-    );
+    return <WidgetCustomizationFormSkeleton />;
   }
 
   return (
@@ -250,6 +244,58 @@ export const WidgetCustomizationForm = ({
           </div>
         </form>
       </Form>
+    </div>
+  );
+};
+
+export const WidgetCustomizationFormSkeleton = () => {
+  return (
+    <div className='flex flex-col'>
+      <div className='space-y-8'>
+        <Card>
+          <CardHeader>
+            <CardTitle>Greeting Chat Settings</CardTitle>
+            <CardDescription>
+              Configure basic chat widget behavior and messages
+            </CardDescription>
+          </CardHeader>
+          <CardContent className='space-y-4'>
+            <Skeleton className='h-20 w-full rounded-md' />
+
+            <Separator />
+
+            <div className='space-y-4'>
+              <div className='flex flex-col gap-y-1'>
+                <h3 className='font-semibold'>Default Suggestions</h3>
+                <p className='text-muted-foreground text-sm'>
+                  Quick suggestions to help customers get started with their
+                  queries
+                </p>
+              </div>
+              <Skeleton className='h-4 w-full rounded-md' />
+              <Skeleton className='h-4 w-full rounded-md' />
+              <Skeleton className='h-4 w-full rounded-md' />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>VAPI Settings</CardTitle>
+            <CardDescription>
+              Configure VAPI settings for your chat widget
+            </CardDescription>
+          </CardHeader>
+          <CardContent className='space-y-4'>
+            <Skeleton className='h-4 w-full rounded-md' />
+            <Skeleton className='h-4 w-full rounded-md' />
+          </CardContent>
+        </Card>
+
+        <div className='flex justify-end'>
+          <Skeleton className='h-10 w-[150px] rounded-md' />
+        </div>
+      </div>
     </div>
   );
 };

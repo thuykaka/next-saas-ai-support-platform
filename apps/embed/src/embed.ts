@@ -55,6 +55,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
   function render() {
     // Create floating action button
     button = document.createElement('button');
+    button.type = 'button';
     button.id = 'echo-widget-button';
     button.innerHTML = chatBubbleIcon;
     button.style.cssText = `
@@ -133,6 +134,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
 
   function handleMessage(event: MessageEvent) {
     if (event.origin !== new URL(EMBED_CONFIG.WIDGET_URL).origin) return;
+    if (typeof event.data !== 'object' || event.data === null) return;
 
     const { type, payload } = event.data;
 

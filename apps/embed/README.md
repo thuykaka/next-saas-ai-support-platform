@@ -94,22 +94,10 @@ dist/
 
 ### Change Widget URL
 
-Update `VITE_WIDGET_URL` in `src/config.ts`:
+Set `VITE_WIDGET_URL` in an `.env` file (or your deploy env):
 
-```typescript
-export const EMBED_CONFIG = {
-  WIDGET_URL: 'https://your-widget-domain.com'
-  // ...
-};
-```
-
-### Change Default Position
-
-```typescript
-export const EMBED_CONFIG = {
-  DEFAULT_POSITION: 'bottom-left' as const
-  // ...
-};
+```sh
+VITE_WIDGET_URL=https://your-widget-domain.com
 ```
 
 ## Notes

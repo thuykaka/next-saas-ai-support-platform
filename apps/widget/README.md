@@ -74,6 +74,31 @@ http://localhost:3001?orgId=your-organization-id
 
 This widget is designed to be embedded in an iframe. The embed script (from the `embed` module) will create an iframe pointing to this application.
 
+### Embed script (recommended)
+
+Add the EchoWidget script to your site and initialize it:
+
+```html
+<script src="/apps/embed/dist/echo-widget.iife.js" defer></script>
+<script>
+  window.EchoWidget.init({
+    orgId: 'your-organization-id', // required unless a default is configured
+    position: 'bottom-right' // or 'bottom-left'
+  });
+</script>
+```
+
+The embed script injects an iframe with recommended permissions for voice:
+
+```html
+<iframe
+  src="http://localhost:3001?orgId=your-organization-id"
+  allow="microphone; camera; clipboard-write; autoplay"
+  referrerpolicy="strict-origin-when-cross-origin"
+  sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+></iframe>
+```
+
 ## Project Structure
 
 ```
