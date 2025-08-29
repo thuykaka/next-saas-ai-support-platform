@@ -26,7 +26,8 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "7.62.0",
     "sonner": "^2.0.7",
-    "zod": "^3.25.67"
+    "zod": "^3.25.67",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",
